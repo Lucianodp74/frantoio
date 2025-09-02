@@ -1,858 +1,11 @@
-<!-- Modal -->
-    <div id="modal-overlay" class="modal-overlay">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-            <div class="flex justify-between items-center mb-4">
-                <h3 id="modal-title" class="text-lg font-semibold">Nuovo</h3>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-xl font-bold">×</button>
-            </div>
-            <div id="modal-content">
-                <!-- Content will be inserted here -->
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Sistema di icone ottimizzato
-        function initializeIcons() {
-            try {
-                // Prova prima con Lucide
-                if (typeof lucide !== 'undefined' && lucide.createIcons) {
-                    lucide.createIcons();
-                    console.log('✅ Icone Lucide caricate');
-                    return true;
-                }
-            } catch (e) {
-                console.log('⚠️ Errore Lucide:', e.message);
-            }
-            
-            // Fallback con emoji
-            replaceIconsWithEmoji();
-            console.log('✅ Icone emoji attivate');
-            return false;
-        }
-
-        // Fallback per icone con emoji migliorati
-        function replaceIconsWithEmoji() {
-            const iconMap = {
-                'factory': '🏭',
-                'bell': '🔔',
-                'home': '🏠', 
-                'truck': '🚛',
-                'package': '📦',
-                'file-text': '📋',
-                'users': '👥',
-                'settings': '⚙️',
-                'trending-up': '📈',
-                'plus': '➕',
-                'alert-triangle': '⚠️',
-                'check-circle': '✅',
-                'download': '⬇️',
-                'upload': '⬆️',
-                'calendar': '📅',
-                'search': '🔍',
-                'bar-chart-3': '📊',
-                'activity': '📊',
-                'zap': '⚡',
-                'printer': '🖨️',
-                'arrow-right-left': '↔️',
-                'cloud-upload': '☁️',
-                'calendar-check': '📋',
-                'shield-check': '🛡️',
-                'wifi': '📶',
-                'gauge': '📊',
-                'shield': '🛡️',
-                'map-pin': '📍',
-                'tree-deciduous': '🌳',
-                'shopping-cart': '🛒'
-            };
-
-            document.querySelectorAll('[data-lucide]').forEach(icon => {
-                const iconName = icon.getAttribute('data-lucide');
-                if (iconMap[iconName]) {
-                    icon.innerHTML = iconMap[iconName];
-                    icon.style.fontSize = '1.2em';
-                    icon.style.display = 'inline-block';
-                    icon.style.width = 'auto';
-                    icon.style.height = 'auto';
-                }
-            });
-        }
-
-        // Variabili globali
-        let currentTab = 'dashboard';
-        let conferimenti = [
-            { id: 1, produttore: 'Az. Agricola Rossi', quantita: 150, varieta: 'Frantoio', data: '2025-09-01', stato: 'in_lavorazione' },
-            { id: 2, produttore: 'Società Olearia Bianchi', quantita: 280, varieta: 'Leccino', data: '2025-09-02', stato: 'completato' },
-            { id: 3, produttore: 'Frantoio Sociale Verde', quantita: 320, varieta: 'Coratina', data: '2025-09-02', stato: 'in_attesa' }
-        ];
-
-        let produzioni = [
-            { id: 1, lotto: 'LOT001', oliveKg: 150, olioL: 22.5, resa: 15, data: '2025-09-01', temperatura: 27 },
-            { id: 2, lotto: 'LOT002', oliveKg: 280, olioL: 44.8, resa: 16, data: '2025-09-02', temperatura: 25 },
-            { id: 3, lotto: 'LOT003', oliveKg: 320, olioL: 51.2, resa: 16, data: '2025-09-02', temperatura: 26 }
-        ];
-
-        // Funzioni SIANCheck con controllo errori
-        function simulateInvioSIAN() {
-            try {
-                const resultDiv = document.getElementById('sian-check-result');
-                if (!resultDiv) return;
-                
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600 mr-2"></div>
-                            <span>Simulazione invio SIAN in corso...</span>
-                        </div>
-                    </div>
-                `;
-                
-                setTimeout(() => {
-                    resultDiv.innerHTML = `
-                        <div class="bg-green-50 p-3 rounded border border-green-200">
-                            <div class="flex items-center">
-                                <span class="text-green-600 mr-2">✅</span>
-                                <div>
-                                    <div class="font-medium text-green-800">Simulazione completata con successo</div>
-                                    <div class="text-sm text-green-600 mt-1">
-                                        • Dati validati: 12 movimenti<br>
-                                        • Formato corretto: ✓ Conforme<br>
-                                        • Esito previsto: <strong>POSITIVO</strong><br>
-                                        • Pronto per invio reale
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }, 2000);
-            } catch (e) {
-                console.error('Errore simulazione SIAN:', e);
-                alert('Errore durante la simulazione. Riprova.');
-            }
-        }
-
-        function invioRapidoSIAN() {
-            try {
-                if (confirm('Procedere con l\'invio rapido dei dati al SIAN?\n\nQuesta operazione invierà tutti i movimenti in sospeso.')) {
-                    const resultDiv = document.getElementById('sian-check-result');
-                    if (!resultDiv) return;
-                    
-                    resultDiv.style.display = 'block';
-                    resultDiv.innerHTML = `
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600 mr-2"></div>
-                                <span>🚀 Invio rapido SIAN in corso via Web Service...</span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    setTimeout(() => {
-                        resultDiv.innerHTML = `
-                            <div class="bg-green-50 p-3 rounded border border-green-200">
-                                <div class="flex items-center">
-                                    <span class="text-green-600 mr-2">✅</span>
-                                    <div>
-                                        <div class="font-medium text-green-800">🎉 Invio SIAN completato con successo!</div>
-                                        <div class="text-sm text-green-600 mt-1">
-                                            • Protocollo: SIAN2025090212345<br>
-                                            • Movimenti inviati: 12<br>
-                                            • Data/Ora: ${new Date().toLocaleString('it-IT')}<br>
-                                            • Email di conferma inviata
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        
-                        // Aggiorna notifiche
-                        updateNotificationsAfterSIAN();
-                    }, 3000);
-                }
-            } catch (e) {
-                console.error('Errore invio SIAN:', e);
-                alert('Errore durante l\'invio. Riprova.');
-            }
-        }
-
-        // Azioni rapide in stile ExtraVirgin
-        function azione2Click(azione) {
-            let messaggio = '';
-            switch(azione) {
-                case 'fatture-giornaliere':
-                    messaggio = '🖨️ Stampando tutte le fatture del giorno...\n\n2 click completati!';
-                    break;
-                case 'registro-giornaliero':
-                    messaggio = '📋 Generando registro giornaliero...\n\nFunzione completata in 2 click!';
-                    break;
-            }
-            
-            setTimeout(() => {
-                alert(messaggio);
-            }, 500);
-        }
-
-        function azione3Click(azione) {
-            if (azione === 'trasferisci-olio') {
-                const da = prompt('Da quale serbatoio? (es. A1, B2, C1):', 'A1');
-                if (da) {
-                    const a = prompt('Verso quale serbatoio? (es. A1, B2, C1):', 'B2');
-                    if (a) {
-                        const quantita = prompt('Quantità in litri:', '100');
-                        if (quantita) {
-                            alert(`⚡ Trasferimento completato!\n\n🔄 ${quantita}L da serbatoio ${da} → ${a}\n✅ Operazione completata in 3 click!`);
-                        }
-                    }
-                }
-            }
-        }
-
-        function azione1Click(azione) {
-            try {
-                if (azione === 'backup-automatico') {
-                    const resultDiv = document.getElementById('sian-check-result');
-                    if (!resultDiv) return;
-                    
-                    resultDiv.style.display = 'block';
-                    resultDiv.innerHTML = `
-                        <div class="flex items-center">
-                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-600 mr-2"></div>
-                            <span>☁️ Backup automatico in corso...</span>
-                        </div>
-                    `;
-                    
-                    setTimeout(() => {
-                        resultDiv.innerHTML = `
-                            <div class="bg-blue-50 p-3 rounded border border-blue-200">
-                                <div class="flex items-center">
-                                    <span class="text-blue-600 mr-2">☁️</span>
-                                    <div>
-                                        <div class="font-medium text-blue-800">✅ Backup completato!</div>
-                                        <div class="text-sm text-blue-600">Database salvato nel cloud - 1 click</div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }, 1500);
-                }
-            } catch (e) {
-                console.error('Errore backup:', e);
-                alert('Backup completato con successo!');
-            }
-        }
-
-        function updateNotificationsAfterSIAN() {
-            // Simula rimozione notifica SIAN dopo invio
-            const notifications = document.querySelectorAll('#dashboard-content .space-y-2 > div');
-            if (notifications[0]) {
-                notifications[0].remove();
-            }
-            // Aggiorna badge
-            const badge = document.getElementById('notification-badge');
-            if (badge) {
-                const count = parseInt(badge.textContent) - 1;
-                badge.textContent = count;
-                if (count === 0) {
-                    badge.style.display = 'none';
-                }
-            }
-        }
-
-        // Funzioni per submit form
-        function submitConferimento(event) {
-            event.preventDefault();
-            
-            const nuovoConferimento = {
-                id: conferimenti.length + 1,
-                produttore: document.getElementById('produttore').value,
-                quantita: parseInt(document.getElementById('quantita').value),
-                varieta: document.getElementById('varieta').value,
-                data: new Date().toISOString().split('T')[0],
-                stato: 'in_attesa'
-            };
-            
-            conferimenti.push(nuovoConferimento);
-            updateConferimentiTable();
-            updateDashboard();
-            closeModal();
-            
-            alert('Conferimento salvato con successo!');
-        }
-
-        function submitProduzione(event) {
-            event.preventDefault();
-            
-            const oliveKg = parseInt(document.getElementById('oliveKg').value);
-            const olioL = (oliveKg * 0.15).toFixed(1); // Resa stimata 15%
-            
-            const nuovaProduzione = {
-                id: produzioni.length + 1,
-                lotto: document.getElementById('lotto').value || `LOT${String(produzioni.length + 1).padStart(3, '0')}`,
-                oliveKg: oliveKg,
-                olioL: parseFloat(olioL),
-                resa: 15,
-                data: new Date().toISOString().split('T')[0],
-                temperatura: parseInt(document.getElementById('temperatura').value)
-            };
-            
-            produzioni.push(nuovaProduzione);
-            updateProduzioneTable();
-            updateDashboard();
-            closeModal();
-            
-            alert('Lavorazione registrata con successo!');
-        }
-
-        function submitMovimento(event) {
-            event.preventDefault();
-            closeModal();
-            alert('Movimento registrato con successo!');
-        }
-
-        // Funzione per mostrare/nascondere tab
-        function showTab(tabName) {
-            // Nasconde tutti i contenuti
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.add('hidden'));
-            
-            // Mostra il contenuto selezionato
-            const selectedContent = document.getElementById(tabName + '-content');
-            if (selectedContent) {
-                selectedContent.classList.remove('hidden');
-            }
-            
-            // Aggiorna la sidebar
-            const sidebarItems = document.querySelectorAll('.sidebar-item');
-            sidebarItems.forEach(item => item.classList.remove('active'));
-            
-            // Trova e attiva l'item corretto
-            sidebarItems.forEach(item => {
-                if (item.textContent.toLowerCase().includes(tabName.toLowerCase()) || 
-                    (tabName === 'dashboard' && item.textContent.includes('Dashboard')) ||
-                    (tabName === 'sian' && item.textContent.includes('SIAN'))) {
-                    item.classList.add('active');
-                }
-            });
-            
-            currentTab = tabName;
-        }
-
-        // Funzioni per modal
-        function openModal(type) {
-            const modal = document.getElementById('modal-overlay');
-            const title = document.getElementById('modal-title');
-            const content = document.getElementById('modal-content');
-            
-            // Imposta il titolo
-            switch(type) {
-                case 'conferimento':
-                    title.textContent = 'Nuovo Conferimento';
-                    content.innerHTML = getConferimentoForm();
-                    break;
-                case 'produzione':
-                    title.textContent = 'Nuova Lavorazione';
-                    content.innerHTML = getProduzioneForm();
-                    break;
-                case 'movimento':
-                    title.textContent = 'Nuovo Movimento';
-                    content.innerHTML = getMovimentoForm();
-                    break;
-                case 'cliente':
-                    title.textContent = 'Nuovo Cliente';
-                    content.innerHTML = getClienteForm();
-                    break;
-                case 'anagrafica':
-                    title.textContent = 'Nuova Anagrafica';
-                    content.innerHTML = getAnagraficaForm();
-                    break;
-            }
-            
-            modal.classList.add('active');
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal-overlay');
-            modal.classList.remove('active');
-        }
-
-        // Form HTML per conferimento
-        function getConferimentoForm() {
-            return `
-                <form onsubmit="submitConferimento(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Produttore</label>
-                        <input type="text" id="produttore" class="w-full p-2 border rounded-lg" required placeholder="Nome produttore o azienda">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Quantità (kg)</label>
-                            <input type="number" id="quantita" class="w-full p-2 border rounded-lg" required min="1">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Varietà</label>
-                            <select id="varieta" class="w-full p-2 border rounded-lg" required>
-                                <option value="">Seleziona varietà</option>
-                                <option value="Frantoio">Frantoio</option>
-                                <option value="Leccino">Leccino</option>
-                                <option value="Moraiolo">Moraiolo</option>
-                                <option value="Coratina">Coratina</option>
-                                <option value="Taggiasca">Taggiasca</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Data Raccolta</label>
-                        <input type="date" id="dataRaccolta" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                            Salva Conferimento
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        // Form HTML per produzione
-        function getProduzioneForm() {
-            return `
-                <form onsubmit="submitProduzione(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Codice Lotto</label>
-                        <input type="text" id="lotto" class="w-full p-2 border rounded-lg" placeholder="Generato automaticamente se vuoto">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Olive (kg)</label>
-                            <input type="number" id="oliveKg" class="w-full p-2 border rounded-lg" required min="1">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Temperatura (°C)</label>
-                            <input type="number" id="temperatura" class="w-full p-2 border rounded-lg" required max="27">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Sistema Estrazione</label>
-                        <select id="sistemaEstrazione" class="w-full p-2 border rounded-lg">
-                            <option value="centrifuga">Centrifuga</option>
-                            <option value="pressione">Pressione</option>
-                            <option value="percolamento">Percolamento</option>
-                        </select>
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                            Avvia Lavorazione
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        // Form HTML per movimento
-        function getMovimentoForm() {
-            return `
-                <form onsubmit="submitMovimento(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Tipo Movimento</label>
-                        <select id="tipoMovimento" class="w-full p-2 border rounded-lg">
-                            <option value="carico">Carico</option>
-                            <option value="scarico">Scarico</option>
-                            <option value="trasferimento">Trasferimento</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Prodotto</label>
-                        <select id="prodotto" class="w-full p-2 border rounded-lg" required>
-                            <option value="">Seleziona prodotto</option>
-                            <option value="extra_vergine">Olio Extra Vergine</option>
-                            <option value="biologico">Olio Biologico</option>
-                            <option value="lampante">Olio Lampante</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Quantità (L)</label>
-                            <input type="number" id="quantitaMovimento" class="w-full p-2 border rounded-lg" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Contenitore</label>
-                            <input type="text" id="contenitore" class="w-full p-2 border rounded-lg" required placeholder="es. Serbatoio A1">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Note</label>
-                        <textarea id="note" class="w-full p-2 border rounded-lg" rows="3" placeholder="Note aggiuntive..."></textarea>
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-                            Registra Movimento
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        // Form HTML per cliente
-        function getClienteForm() {
-            return `
-                <form onsubmit="submitCliente(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Ragione Sociale</label>
-                        <input type="text" id="ragioneSociale" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">P. IVA</label>
-                            <input type="text" id="partitaIva" class="w-full p-2 border rounded-lg" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Tipo Cliente</label>
-                            <select id="tipoCliente" class="w-full p-2 border rounded-lg" required>
-                                <option value="">Seleziona tipo</option>
-                                <option value="conto_proprio">Conto Proprio</option>
-                                <option value="conto_terzi">Conto Terzi</option>
-                                <option value="e_commerce">E-commerce</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Email</label>
-                        <input type="email" id="email" class="w-full p-2 border rounded-lg">
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                            Salva Cliente
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        function getAnagraficaForm() {
-            return `
-                <form onsubmit="submitAnagrafica(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Tipo Anagrafica</label>
-                        <select id="tipoAnagrafica" class="w-full p-2 border rounded-lg" required>
-                            <option value="">Seleziona tipo</option>
-                            <option value="produttore">Produttore</option>
-                            <option value="fornitore">Fornitore</option>
-                            <option value="vettore">Vettore</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Nome/Ragione Sociale</label>
-                        <input type="text" id="nomeAnagrafica" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Codice Fiscale</label>
-                            <input type="text" id="codiceFiscale" class="w-full p-2 border rounded-lg">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Telefono</label>
-                            <input type="tel" id="telefono" class="w-full p-2 border rounded-lg">
-                        </div>
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                            Salva Anagrafica
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        function submitCliente(event) {
-            event.preventDefault();
-            closeModal();
-            alert('Cliente salvato con successo!');
-        }
-
-        function submitAnagrafica(event) {
-            event.preventDefault();
-            closeModal();
-            alert('Anagrafica salvata con successo!');
-        }
-
-        // Funzioni per aggiornare le tabelle
-        function updateConferimentiTable() {
-            const tbody = document.getElementById('conferimenti-table');
-            if (!tbody) return;
-            
-            tbody.innerHTML = conferimenti.map(conf => `
-                <tr>
-                    <td class="px-4 py-3 text-sm">${conf.id}</td>
-                    <td class="px-4 py-3 text-sm">${conf.produttore}</td>
-                    <td class="px-4 py-3 text-sm">${conf.quantita}</td>
-                    <td class="px-4 py-3 text-sm">${conf.varieta}</td>
-                    <td class="px-4 py-3 text-sm">${conf.data}</td>
-                    <td class="px-4 py-3 text-sm">
-                        <span class="px-2 py-1 text-xs rounded-full ${getStatoClass(conf.stato)}">${conf.stato.replace('_', ' ')}</span>
-                    </td>
-                    <td class="px-4 py-3 text-sm">
-                        <button class="text-blue-600 hover:text-blue-800 mr-2">Modifica</button>
-                        <button class="text-red-600 hover:text-red-800">Elimina</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function updateProduzioneTable() {
-            // Update production table if needed
-        }
-
-        function getStatoClass(stato) {
-            switch(stato) {
-                case 'completato':
-                    return 'bg-green-100 text-green-800';
-                case 'in_lavorazione':
-                    return 'bg-yellow-100 text-yellow-800';
-                default:
-                    return 'bg-gray-100 text-gray-800';
-            }
-        }
-
-        // Funzione per aggiornare dashboard
-        function updateDashboard() {
-            const totalConferimenti = conferimenti.length;
-            const totaleProduzione = produzioni.reduce((sum, prod) => sum + prod.olioL, 0);
-            const resaMedia = produzioni.length > 0 ? 
-                (produzioni.reduce((sum, prod) => sum + prod.resa, 0) / produzioni.length).toFixed(1) : 0;
-            
-            document.getElementById('total-conferimenti').textContent = totalConferimenti;
-            document.getElementById('total-produzione').textContent = totaleProduzione.toFixed(1);
-            document.getElementById('resa-media').textContent = resaMedia;
-        }
-
-        // Chiusura modal con click esterno
-        document.getElementById('modal-overlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Inizializzazione con timeout per Lucide
-        document.addEventListener('DOMContentLoaded', function() {
-            // Prova subito
-            if (!initializeIcons()) {
-                // Se fallisce, riprova dopo un breve delay
-                setTimeout(() => {
-                    initializeIcons();
-                }, 500);
-            }
-            
-            // Altre inizializzazioni
-            updateDashboard();
-        });
-    </script>
-</body>
-</html>                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">Extra Vergine Premium</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">450 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio A1</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium text-green-600">18°C ✓</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Origine:</span>
-                                    <span class="text-sm font-medium">Lotti: LOT001, LOT002</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button onclick="azione3Click('trasferisci-olio')" class="text-blue-600 hover:text-blue-800 text-sm mr-3">
-                                    Trasferisci (3 click)
-                                </button>
-                                <button class="text-green-600 hover:text-green-800 text-sm">Etichette
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">Biologico Certificato</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">320 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio B2</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium text-green-600">17°C ✓</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Certificazione:</span>
-                                    <span class="text-sm font-medium text-green-600">BIO IT-009-BC</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button onclick="azione3Click('trasferisci-olio')" class="text-blue-600 hover:text-blue-800 text-sm mr-3">Trasferisci (3 click)</button>
-                                <button class="text-green-600 hover:text-green-800 text-sm">Etichette</button>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">DOP Toscano IGP</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">180 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio C1</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium text-green-600">18°C ✓</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">DOP:</span>
-                                    <span class="text-sm font-medium text-blue-600">Toscano IGP</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button onclick="azione3Click('trasferisci-olio')" class="text-blue-600 hover:text-blue-800 text-sm mr-3">Trasferisci (3 click)</button>
-                                <button class="text-green-600 hover:text-green-800 text-sm">Etichette DOP</button>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">Lampante</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">95 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio D1</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium text-red-600">19°C ⚠️</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Destinazione:</span>
-                                    <span class="text-sm font-medium text-orange-600">Raffinazione</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button onclick="azione3Click('trasferisci-olio')" class="text-blue-600 hover:text-blue-800 text-sm mr-3">Trasferisci (3 click)</button>
-                                <button class="text-orange-600 hover:text-orange-800 text-sm">Refrigera</button>
-                            </div>
-                        </div>
-
-                        <!-- Nuovo serbatoio con interconnessione 4.0 -->
-                        <div class="bg-white p-4 rounded-lg border border-blue-200">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold flex items-center">
-                                    Monovarietale Coratina
-                                    <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">4.0</span>
-                                </h3>
-                                <i data-lucide="package" class="h-5 w-5 text-blue-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">280 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio E1 📡</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium text-green-600">16.8°C ✓ (live)</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Varietà:</span>
-                                    <span class="text-sm font-medium text-purple-600">100% Coratina</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button onclick="azione3Click('trasferisci-olio')" class="text-blue-600 hover:text-blue-800 text-sm mr-3">Trasferisci (3 click)</button>
-                                <button class="text-purple-600 hover:text-purple-800 text-sm">Monitor IoT</button>
-                            </div>
-                        </div>
-
-                        <!-- Card per e-commerce integration -->
-                        <div class="bg-white p-4 rounded-lg border border-green-200">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold flex items-center">
-                                    Confezionato per E-shop
-                                    <span class="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">E-COM</span>
-                                </h3>
-                                <i data-lucide="shopping-cart" class="h-5 w-5 text-green-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Bottiglie 0.5L:</span>
-                                    <span class="text-sm font-medium">240 pz</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Ordini WooCommerce:</span>
-                                    <span class="text-sm font-medium text-green-600">12 nuovi</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Scorta minima:</span>
-                                    <span class="text-sm font-medium text-orange-600">⚠️ 50 pz</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button class="text-green-600 hover:text-green-800 text-sm mr-3">Sincronizza Shop</button>
-                                <button class="text-blue-600 hover:text-blue-800 text-sm">Etichette</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frantoio Manager - App Gestione Frantoio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -886,12 +39,12 @@
     <header class="bg-white shadow-sm border-b">
         <div class="flex items-center justify-between px-6 py-4">
             <div class="flex items-center">
-                <i data-lucide="factory" class="h-8 w-8 text-green-600 mr-3"></i>
-                <h1 class="text-xl font-bold text-gray-900">Frantoio Manager</h1>
+                <span class="text-2xl mr-3">🏭</span>
+                <h1 class="text-xl font-bold text-gray-900">Frantoio Manager Pro</h1>
             </div>
             <div class="flex items-center space-x-4">
                 <div class="relative">
-                    <i data-lucide="bell" class="h-6 w-6 text-gray-500"></i>
+                    <span class="text-xl">🔔</span>
                     <span id="notification-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
                 </div>
                 <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-semibold">F</div>
@@ -905,31 +58,31 @@
             <div class="p-4">
                 <div class="space-y-1">
                     <button onclick="showTab('dashboard')" class="sidebar-item active w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
-                        <i data-lucide="home" class="h-5 w-5 mr-3"></i>
+                        <span class="mr-3">🏠</span>
                         Dashboard
                     </button>
                     <button onclick="showTab('conferimenti')" class="sidebar-item w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
-                        <i data-lucide="truck" class="h-5 w-5 mr-3"></i>
+                        <span class="mr-3">🚛</span>
                         Conferimenti
                     </button>
                     <button onclick="showTab('produzione')" class="sidebar-item w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
-                        <i data-lucide="factory" class="h-5 w-5 mr-3"></i>
+                        <span class="mr-3">🏭</span>
                         Produzione
                     </button>
                     <button onclick="showTab('magazzino')" class="sidebar-item w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
-                        <i data-lucide="package" class="h-5 w-5 mr-3"></i>
+                        <span class="mr-3">📦</span>
                         Magazzino
                     </button>
                     <button onclick="showTab('sian')" class="sidebar-item w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
-                        <i data-lucide="file-text" class="h-5 w-5 mr-3"></i>
+                        <span class="mr-3">📋</span>
                         SIAN Reports
                     </button>
                     <button onclick="showTab('clienti')" class="sidebar-item w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
-                        <i data-lucide="users" class="h-5 w-5 mr-3"></i>
+                        <span class="mr-3">👥</span>
                         Clienti
                     </button>
                     <button onclick="showTab('impostazioni')" class="sidebar-item w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
-                        <i data-lucide="settings" class="h-5 w-5 mr-3"></i>
+                        <span class="mr-3">⚙️</span>
                         Impostazioni
                     </button>
                 </div>
@@ -949,7 +102,7 @@
                                     <p class="text-blue-600 text-sm font-medium">Conferimenti Oggi</p>
                                     <p class="text-2xl font-bold text-blue-800" id="total-conferimenti">3</p>
                                 </div>
-                                <i data-lucide="truck" class="h-8 w-8 text-blue-600"></i>
+                                <span class="text-2xl">🚛</span>
                             </div>
                         </div>
                         
@@ -959,7 +112,7 @@
                                     <p class="text-green-600 text-sm font-medium">Produzione (L)</p>
                                     <p class="text-2xl font-bold text-green-800" id="total-produzione">118.5</p>
                                 </div>
-                                <i data-lucide="factory" class="h-8 w-8 text-green-600"></i>
+                                <span class="text-2xl">🏭</span>
                             </div>
                         </div>
                         
@@ -969,7 +122,7 @@
                                     <p class="text-yellow-600 text-sm font-medium">Giacenze (L)</p>
                                     <p class="text-2xl font-bold text-yellow-800" id="total-giacenze">1045</p>
                                 </div>
-                                <i data-lucide="package" class="h-8 w-8 text-yellow-600"></i>
+                                <span class="text-2xl">📦</span>
                             </div>
                         </div>
                         
@@ -979,7 +132,7 @@
                                     <p class="text-purple-600 text-sm font-medium">Resa Media %</p>
                                     <p class="text-2xl font-bold text-purple-800" id="resa-media">15.7</p>
                                 </div>
-                                <i data-lucide="trending-up" class="h-8 w-8 text-purple-600"></i>
+                                <span class="text-2xl">📈</span>
                             </div>
                         </div>
                     </div>
@@ -987,26 +140,26 @@
                     <!-- Notifiche -->
                     <div class="bg-white p-4 rounded-lg border">
                         <h3 class="text-lg font-semibold mb-3 flex items-center">
-                            <i data-lucide="bell" class="h-5 w-5 mr-2"></i>
+                            <span class="mr-2">🔔</span>
                             Notifiche
                         </h3>
                         <div class="space-y-2">
                             <div class="p-3 rounded-lg flex items-center bg-yellow-50 border-yellow-200 border">
-                                <i data-lucide="alert-triangle" class="h-4 w-4 text-yellow-600 mr-3"></i>
+                                <span class="mr-3">⚠️</span>
                                 <div class="flex-1">
                                     <p class="text-sm">Invio dati SIAN in scadenza (3 giorni)</p>
                                     <p class="text-xs text-gray-500">05/09/2025</p>
                                 </div>
                             </div>
                             <div class="p-3 rounded-lg flex items-center bg-blue-50 border-blue-200 border">
-                                <i data-lucide="check-circle" class="h-4 w-4 text-blue-600 mr-3"></i>
+                                <span class="mr-3">ℹ️</span>
                                 <div class="flex-1">
                                     <p class="text-sm">Manutenzione programmata impianto centrifuga</p>
                                     <p class="text-xs text-gray-500">10/09/2025</p>
                                 </div>
                             </div>
                             <div class="p-3 rounded-lg flex items-center bg-yellow-50 border-yellow-200 border">
-                                <i data-lucide="alert-triangle" class="h-4 w-4 text-yellow-600 mr-3"></i>
+                                <span class="mr-3">🌡️</span>
                                 <div class="flex-1">
                                     <p class="text-sm">Temperatura serbatoio D1 elevata (19°C)</p>
                                     <p class="text-xs text-gray-500">02/09/2025</p>
@@ -1018,7 +171,7 @@
                     <!-- Ultimi conferimenti -->
                     <div class="bg-white p-4 rounded-lg border">
                         <h3 class="text-lg font-semibold mb-3">Ultimi Conferimenti</h3>
-                        <div class="space-y-2" id="ultimi-conferimenti">
+                        <div class="space-y-2">
                             <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
                                 <div>
                                     <span class="font-medium">Az. Agricola Rossi</span>
@@ -1051,7 +204,7 @@
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold">Gestione Conferimenti</h2>
                         <button onclick="openModal('conferimento')" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
-                            <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
+                            <span class="mr-2">➕</span>
                             Nuovo Conferimento
                         </button>
                     </div>
@@ -1118,188 +271,6 @@
                 </div>
             </div>
 
-            <!-- Produzione -->
-            <div id="produzione-content" class="tab-content hidden">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold">Gestione Produzione</h2>
-                        <button onclick="openModal('produzione')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
-                            <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
-                            Nuova Lavorazione
-                        </button>
-                    </div>
-
-                    <div class="bg-white rounded-lg border overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Lotto</th>
-                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Olive (kg)</th>
-                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Olio (L)</th>
-                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Resa %</th>
-                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Temperatura</th>
-                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Data</th>
-                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Azioni</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium">LOT001</td>
-                                    <td class="px-4 py-3 text-sm">150</td>
-                                    <td class="px-4 py-3 text-sm">22.5</td>
-                                    <td class="px-4 py-3 text-sm">15%</td>
-                                    <td class="px-4 py-3 text-sm">27°C</td>
-                                    <td class="px-4 py-3 text-sm">2025-09-01</td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <button class="text-blue-600 hover:text-blue-800 mr-2">Dettagli</button>
-                                        <button class="text-green-600 hover:text-green-800">Stampa</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium">LOT002</td>
-                                    <td class="px-4 py-3 text-sm">280</td>
-                                    <td class="px-4 py-3 text-sm">44.8</td>
-                                    <td class="px-4 py-3 text-sm">16%</td>
-                                    <td class="px-4 py-3 text-sm">25°C</td>
-                                    <td class="px-4 py-3 text-sm">2025-09-02</td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <button class="text-blue-600 hover:text-blue-800 mr-2">Dettagli</button>
-                                        <button class="text-green-600 hover:text-green-800">Stampa</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium">LOT003</td>
-                                    <td class="px-4 py-3 text-sm">320</td>
-                                    <td class="px-4 py-3 text-sm">51.2</td>
-                                    <td class="px-4 py-3 text-sm">16%</td>
-                                    <td class="px-4 py-3 text-sm">26°C</td>
-                                    <td class="px-4 py-3 text-sm">2025-09-02</td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <button class="text-blue-600 hover:text-blue-800 mr-2">Dettagli</button>
-                                        <button class="text-green-600 hover:text-green-800">Stampa</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Magazzino -->
-            <div id="magazzino-content" class="tab-content hidden">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold">Gestione Magazzino</h2>
-                        <button onclick="openModal('movimento')" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 flex items-center">
-                            <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
-                            Nuovo Movimento
-                        </button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">Extra Vergine</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">450 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio A1</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium">18°C</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button class="text-blue-600 hover:text-blue-800 text-sm mr-3">Movimenta</button>
-                                <button class="text-green-600 hover:text-green-800 text-sm">Etichette</button>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">Biologico</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">320 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio B2</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium">17°C</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button class="text-blue-600 hover:text-blue-800 text-sm mr-3">Movimenta</button>
-                                <button class="text-green-600 hover:text-green-800 text-sm">Etichette</button>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">DOP Toscano</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">180 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio C1</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium">18°C</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button class="text-blue-600 hover:text-blue-800 text-sm mr-3">Movimenta</button>
-                                <button class="text-green-600 hover:text-green-800 text-sm">Etichette</button>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-semibold">Lampante</h3>
-                                <i data-lucide="package" class="h-5 w-5 text-gray-500"></i>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Quantità:</span>
-                                    <span class="text-sm font-medium">95 L</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Contenitore:</span>
-                                    <span class="text-sm font-medium">Serbatoio D1</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Temperatura:</span>
-                                    <span class="text-sm font-medium text-yellow-600">19°C ⚠️</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 pt-3 border-t">
-                                <button class="text-blue-600 hover:text-blue-800 text-sm mr-3">Movimenta</button>
-                                <button class="text-green-600 hover:text-green-800 text-sm">Etichette</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- SIAN Reports -->
             <div id="sian-content" class="tab-content hidden">
                 <div class="space-y-4">
@@ -1307,20 +278,20 @@
                         <h2 class="text-xl font-bold">SIAN - Sistema Integrato</h2>
                         <div class="flex space-x-2">
                             <button onclick="simulateInvioSIAN()" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 flex items-center">
-                                <i data-lucide="check-circle" class="h-4 w-4 mr-2"></i>
-                                SIANCheck - Simula Invio
+                                <span class="mr-2">🔍</span>
+                                SIANCheck
                             </button>
                             <button onclick="invioRapidoSIAN()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center">
-                                <i data-lucide="upload" class="h-4 w-4 mr-2"></i>
-                                Invio Rapido SIAN
+                                <span class="mr-2">🚀</span>
+                                Invio Rapido
                             </button>
                         </div>
                     </div>
 
-                    <!-- Stato SIANCheck -->
-                    <div id="sian-status" class="bg-white p-4 rounded-lg border">
+                    <!-- Stato connessione -->
+                    <div class="bg-white p-4 rounded-lg border">
                         <h3 class="font-semibold mb-3 flex items-center">
-                            <i data-lucide="activity" class="h-5 w-5 mr-2 text-blue-600"></i>
+                            <span class="mr-2">📡</span>
                             Stato Connessione SIAN
                         </h3>
                         <div class="flex items-center justify-between">
@@ -1335,65 +306,62 @@
                         </div>
                     </div>
 
-                    <!-- Quick Actions - Stile ExtraVirgin -->
+                    <!-- Quick Actions -->
                     <div class="bg-white p-4 rounded-lg border">
                         <h3 class="font-semibold mb-3 flex items-center">
-                            <i data-lucide="zap" class="h-5 w-5 mr-2 text-yellow-600"></i>
-                            Azioni Rapide (Pochi Click)
+                            <span class="mr-2">⚡</span>
+                            Azioni Rapide (Stile ExtraVirgin)
                         </h3>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                            <button onclick="azione2Click('fatture-giornaliere')" class="bg-blue-50 p-3 rounded-lg text-center hover:bg-blue-100 transition-colors">
-                                <i data-lucide="printer" class="h-6 w-6 mx-auto mb-1 text-blue-600"></i>
+                            <button onclick="azione2Click('fatture')" class="bg-blue-50 p-3 rounded-lg text-center hover:bg-blue-100 transition-colors">
+                                <div class="text-2xl mb-1">🖨️</div>
                                 <div class="text-xs font-medium">Fatture Giornata</div>
                                 <div class="text-xs text-gray-500">2 click</div>
                             </button>
-                            <button onclick="azione3Click('trasferisci-olio')" class="bg-green-50 p-3 rounded-lg text-center hover:bg-green-100 transition-colors">
-                                <i data-lucide="arrow-right-left" class="h-6 w-6 mx-auto mb-1 text-green-600"></i>
+                            <button onclick="azione3Click('trasferimento')" class="bg-green-50 p-3 rounded-lg text-center hover:bg-green-100 transition-colors">
+                                <div class="text-2xl mb-1">↔️</div>
                                 <div class="text-xs font-medium">Trasferisci Olio</div>
                                 <div class="text-xs text-gray-500">3 click</div>
                             </button>
-                            <button onclick="azione1Click('backup-automatico')" class="bg-purple-50 p-3 rounded-lg text-center hover:bg-purple-100 transition-colors">
-                                <i data-lucide="cloud-upload" class="h-6 w-6 mx-auto mb-1 text-purple-600"></i>
+                            <button onclick="azione1Click('backup')" class="bg-purple-50 p-3 rounded-lg text-center hover:bg-purple-100 transition-colors">
+                                <div class="text-2xl mb-1">☁️</div>
                                 <div class="text-xs font-medium">Backup Cloud</div>
                                 <div class="text-xs text-gray-500">1 click</div>
                             </button>
-                            <button onclick="azione2Click('registro-giornaliero')" class="bg-yellow-50 p-3 rounded-lg text-center hover:bg-yellow-100 transition-colors">
-                                <i data-lucide="calendar-check" class="h-6 w-6 mx-auto mb-1 text-yellow-600"></i>
+                            <button onclick="azione2Click('registro')" class="bg-yellow-50 p-3 rounded-lg text-center hover:bg-yellow-100 transition-colors">
+                                <div class="text-2xl mb-1">📋</div>
                                 <div class="text-xs font-medium">Registro Oggi</div>
                                 <div class="text-xs text-gray-500">2 click</div>
                             </button>
                         </div>
                     </div>
 
+                    <!-- Registri SIAN -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-white p-4 rounded-lg border">
                             <h3 class="font-semibold mb-3 flex items-center">
-                                <i data-lucide="shield-check" class="h-5 w-5 mr-2 text-green-600"></i>
+                                <span class="mr-2">📋</span>
                                 Registro Carico/Scarico Olive
                             </h3>
-                            <p class="text-sm text-gray-600 mb-4">Art. 3 DM 4/11/2019 - Normativa Mipaaf n 8077/2009</p>
+                            <p class="text-sm text-gray-600 mb-4">Art. 3 DM 4/11/2019</p>
                             <div class="space-y-2">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-600">Movimenti oggi:</span>
                                     <span class="font-medium">12</span>
                                 </div>
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600">Ultimo invio SIAN:</span>
+                                    <span class="text-gray-600">Ultimo invio:</span>
                                     <span class="font-medium text-green-600">✓ 01/09/2025</span>
                                 </div>
-                                <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center justify-center">
-                                    <i data-lucide="file-text" class="h-4 w-4 mr-2"></i>
-                                    Visualizza Registro
-                                </button>
                             </div>
                         </div>
 
                         <div class="bg-white p-4 rounded-lg border">
                             <h3 class="font-semibold mb-3 flex items-center">
-                                <i data-lucide="factory" class="h-5 w-5 mr-2 text-blue-600"></i>
+                                <span class="mr-2">🏭</span>
                                 Registro Produzione Olio
                             </h3>
-                            <p class="text-sm text-gray-600 mb-4">Art. 4 DM 4/11/2019 - Tracciabilità completa</p>
+                            <p class="text-sm text-gray-600 mb-4">Art. 4 DM 4/11/2019</p>
                             <div class="space-y-2">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-600">Lotti prodotti:</span>
@@ -1403,167 +371,42 @@
                                     <span class="text-gray-600">Conformità:</span>
                                     <span class="font-medium text-green-600">✓ 100%</span>
                                 </div>
-                                <button class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 flex items-center justify-center">
-                                    <i data-lucide="download" class="h-4 w-4 mr-2"></i>
-                                    Esporta Registro
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <h3 class="font-semibold mb-3 flex items-center">
-                                <i data-lucide="wifi" class="h-5 w-5 mr-2 text-orange-600"></i>
-                                Comunicazioni Telematiche
-                            </h3>
-                            <p class="text-sm text-gray-600 mb-4">Web Service diretto - Senza accesso portale</p>
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600">Invii automatici:</span>
-                                    <span class="font-medium text-green-600">Attivi</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600">Prossimo invio:</span>
-                                    <span class="font-medium">15/09/2025 - 08:00</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600">Successo invii:</span>
-                                    <span class="font-medium text-green-600">100% ✓</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border">
-                            <h3 class="font-semibold mb-3 flex items-center">
-                                <i data-lucide="gauge" class="h-5 w-5 mr-2 text-purple-600"></i>
-                                ExtraRiscontro - Verifica Avanzata
-                            </h3>
-                            <p class="text-sm text-gray-600 mb-4">Sistema di controllo pre-invio</p>
-                            <div class="space-y-2">
-                                <div class="flex items-center">
-                                    <i data-lucide="check-circle" class="h-4 w-4 text-green-600 mr-2"></i>
-                                    <span class="text-sm">Dati validati</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i data-lucide="check-circle" class="h-4 w-4 text-green-600 mr-2"></i>
-                                    <span class="text-sm">Formato SIAN corretto</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i data-lucide="clock" class="h-4 w-4 text-blue-600 mr-2"></i>
-                                    <span class="text-sm">Simulazione: pronta</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tracciabilità ExtraVirgin Style -->
-                    <div class="bg-white p-4 rounded-lg border">
-                        <h3 class="font-semibold mb-3 flex items-center">
-                            <i data-lucide="map-pin" class="h-5 w-5 mr-2 text-green-600"></i>
-                            Tracciabilità "Dall'Albero alla Bottiglia"
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <div class="text-center p-3 bg-green-50 rounded-lg">
-                                <i data-lucide="tree-deciduous" class="h-8 w-8 mx-auto mb-2 text-green-600"></i>
-                                <div class="text-sm font-medium">Dati Catastali</div>
-                                <div class="text-xs text-gray-500">Produttori registrati</div>
-                            </div>
-                            <div class="text-center p-3 bg-blue-50 rounded-lg">
-                                <i data-lucide="truck" class="h-8 w-8 mx-auto mb-2 text-blue-600"></i>
-                                <div class="text-sm font-medium">Conferimento</div>
-                                <div class="text-xs text-gray-500">Pesature multiple</div>
-                            </div>
-                            <div class="text-center p-3 bg-orange-50 rounded-lg">
-                                <i data-lucide="factory" class="h-8 w-8 mx-auto mb-2 text-orange-600"></i>
-                                <div class="text-sm font-medium">Lavorazione</div>
-                                <div class="text-xs text-gray-500">Moliture controllate</div>
-                            </div>
-                            <div class="text-center p-3 bg-purple-50 rounded-lg">
-                                <i data-lucide="package" class="h-8 w-8 mx-auto mb-2 text-purple-600"></i>
-                                <div class="text-sm font-medium">Confezionamento</div>
-                                <div class="text-xs text-gray-500">Sistema magazzino</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-                    <div class="bg-white p-4 rounded-lg border">
-                        <h3 class="font-semibold mb-3 flex items-center">
-                            <i data-lucide="users" class="h-5 w-5 mr-2 text-blue-600"></i>
-                            Gestione Anagrafica
-                        </h3>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div class="text-center p-3 bg-blue-50 rounded-lg">
-                                <div class="text-2xl font-bold text-blue-600">24</div>
-                                <div class="text-sm text-gray-600">Clienti attivi</div>
-                            </div>
-                            <div class="text-center p-3 bg-green-50 rounded-lg">
-                                <div class="text-2xl font-bold text-green-600">18</div>
-                                <div class="text-sm text-gray-600">Produttori</div>
-                            </div>
-                            <div class="text-center p-3 bg-purple-50 rounded-lg">
-                                <div class="text-2xl font-bold text-purple-600">6</div>
-                                <div class="text-sm text-gray-600">Fornitori</div>
-                            </div>
-                            <div class="text-center p-3 bg-orange-50 rounded-lg">
-                                <div class="text-2xl font-bold text-orange-600">4</div>
-                                <div class="text-sm text-gray-600">Vettori</div>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex space-x-2">
-                            <button onclick="openModal('anagrafica')" class="bg-blue-600 text-white px-3 py-1 text-sm rounded hover:bg-blue-700">
-                                Nuova Anagrafica
-                            </button>
-                            <button class="bg-gray-600 text-white px-3 py-1 text-sm rounded hover:bg-gray-700">
-                                Importa CSV
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Fatturazione elettronica -->
-                    <div class="bg-white p-4 rounded-lg border">
-                        <h3 class="font-semibold mb-3 flex items-center">
-                            <i data-lucide="file-text" class="h-5 w-5 mr-2 text-green-600"></i>
-                            Fatturazione Elettronica
-                        </h3>
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-600">Fatture oggi:</span>
-                                <span class="text-sm font-medium">8</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-600">Inviate AdE:</span>
-                                <span class="text-sm font-medium text-green-600">8/8 ✓</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-600">Corrispettivi:</span>
-                                <span class="text-sm font-medium text-blue-600">Auto-invio</span>
-                            </div>
-                            <button onclick="azione2Click('fatture-giornaliere')" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 text-sm">
-                                Stampa Tutte (2 click)
-                            </button>
-                        </div>
-                    </div>
+            <!-- Altri tab placeholder -->
+            <div id="produzione-content" class="tab-content hidden">
+                <div class="text-center py-12">
+                    <span class="text-6xl">🏭</span>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2 mt-4">Gestione Produzione</h3>
+                    <p class="text-gray-500">Sezione in sviluppo</p>
                 </div>
             </div>
 
-            <!-- Clienti Enhanced -->
+            <div id="magazzino-content" class="tab-content hidden">
+                <div class="text-center py-12">
+                    <span class="text-6xl">📦</span>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2 mt-4">Gestione Magazzino</h3>
+                    <p class="text-gray-500">Sezione in sviluppo</p>
+                </div>
+            </div>
+
             <div id="clienti-content" class="tab-content hidden">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold">Gestione Clienti & CRM</h2>
-                        <button onclick="openModal('cliente')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
-                            <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
-                            Nuovo Cliente
-                        </button>
-                    </div>
+                <div class="text-center py-12">
+                    <span class="text-6xl">👥</span>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2 mt-4">Gestione Clienti</h3>
+                    <p class="text-gray-500">Sezione in sviluppo</p>
+                </div>
+            </div>
 
-            <!-- Impostazioni -->
             <div id="impostazioni-content" class="tab-content hidden">
                 <div class="text-center py-12">
-                    <i data-lucide="settings" class="h-12 w-12 text-gray-400 mx-auto mb-4"></i>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Impostazioni</h3>
-                    <p class="text-gray-500">Configurazione sistema in sviluppo</p>
+                    <span class="text-6xl">⚙️</span>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2 mt-4">Impostazioni</h3>
+                    <p class="text-gray-500">Sezione in sviluppo</p>
                 </div>
             </div>
         </main>
@@ -1583,59 +426,6 @@
     </div>
 
     <script>
-        // Sistema di icone con fallback automatico
-        function initializeIcons() {
-            // Prova prima con Lucide
-            if (typeof lucide !== 'undefined') {
-                try {
-                    lucide.createIcons();
-                    console.log('✅ Icone Lucide caricate');
-                    return true;
-                } catch (e) {
-                    console.log('⚠️ Errore Lucide, uso emoji');
-                }
-            }
-            
-            // Fallback con emoji
-            replaceIconsWithEmoji();
-            console.log('✅ Icone emoji attivate');
-            return false;
-        }
-
-        // Fallback per icone con emoji migliorati
-        function replaceIconsWithEmoji() {
-            const iconMap = {
-                'factory': '🏭',
-                'bell': '🔔',
-                'home': '🏠', 
-                'truck': '🚛',
-                'package': '📦',
-                'file-text': '📋',
-                'users': '👥',
-                'settings': '⚙️',
-                'trending-up': '📈',
-                'plus': '➕',
-                'alert-triangle': '⚠️',
-                'check-circle': '✅',
-                'download': '⬇️',
-                'upload': '⬆️',
-                'calendar': '📅',
-                'search': '🔍',
-                'bar-chart-3': '📊'
-            };
-
-            document.querySelectorAll('[data-lucide]').forEach(icon => {
-                const iconName = icon.getAttribute('data-lucide');
-                if (iconMap[iconName]) {
-                    icon.innerHTML = iconMap[iconName];
-                    icon.style.fontSize = '1.2em';
-                    icon.style.display = 'inline-block';
-                    icon.style.width = 'auto';
-                    icon.style.height = 'auto';
-                }
-            });
-        }
-
         // Variabili globali
         let currentTab = 'dashboard';
         let conferimenti = [
@@ -1644,29 +434,19 @@
             { id: 3, produttore: 'Frantoio Sociale Verde', quantita: 320, varieta: 'Coratina', data: '2025-09-02', stato: 'in_attesa' }
         ];
 
-        let produzioni = [
-            { id: 1, lotto: 'LOT001', oliveKg: 150, olioL: 22.5, resa: 15, data: '2025-09-01', temperatura: 27 },
-            { id: 2, lotto: 'LOT002', oliveKg: 280, olioL: 44.8, resa: 16, data: '2025-09-02', temperatura: 25 },
-            { id: 3, lotto: 'LOT003', oliveKg: 320, olioL: 51.2, resa: 16, data: '2025-09-02', temperatura: 26 }
-        ];
-
         // Funzione per mostrare/nascondere tab
         function showTab(tabName) {
-            // Nasconde tutti i contenuti
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.add('hidden'));
             
-            // Mostra il contenuto selezionato
             const selectedContent = document.getElementById(tabName + '-content');
             if (selectedContent) {
                 selectedContent.classList.remove('hidden');
             }
             
-            // Aggiorna la sidebar
             const sidebarItems = document.querySelectorAll('.sidebar-item');
             sidebarItems.forEach(item => item.classList.remove('active'));
             
-            // Trova e attiva l'item corretto
             sidebarItems.forEach(item => {
                 if (item.textContent.toLowerCase().includes(tabName.toLowerCase()) || 
                     (tabName === 'dashboard' && item.textContent.includes('Dashboard')) ||
@@ -1678,362 +458,157 @@
             currentTab = tabName;
         }
 
-        // Funzioni per modal
+        // Funzioni SIAN
+        function simulateInvioSIAN() {
+            const resultDiv = document.getElementById('sian-check-result');
+            if (!resultDiv) return;
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '🔍 Simulazione invio SIAN in corso...';
+            
+            setTimeout(() => {
+                resultDiv.innerHTML = `
+                    <div class="bg-green-50 p-3 rounded border border-green-200">
+                        <div class="font-medium text-green-800">✅ Simulazione completata!</div>
+                        <div class="text-sm text-green-600 mt-1">
+                            • Dati validati: 12 movimenti<br>
+                            • Formato: ✓ Conforme<br>
+                            • Esito previsto: <strong>POSITIVO</strong>
+                        </div>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function invioRapidoSIAN() {
+            if (confirm('Procedere con invio rapido al SIAN?')) {
+                const resultDiv = document.getElementById('sian-check-result');
+                if (!resultDiv) return;
+                
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = '🚀 Invio rapido SIAN in corso...';
+                
+                setTimeout(() => {
+                    resultDiv.innerHTML = `
+                        <div class="bg-green-50 p-3 rounded border border-green-200">
+                            <div class="font-medium text-green-800">🎉 Invio completato!</div>
+                            <div class="text-sm text-green-600 mt-1">
+                                • Protocollo: SIAN2025090212345<br>
+                                • Data: ${new Date().toLocaleString('it-IT')}<br>
+                                • Email di conferma inviata
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Rimuovi notifica SIAN
+                    const badge = document.getElementById('notification-badge');
+                    if (badge) {
+                        const count = parseInt(badge.textContent) - 1;
+                        badge.textContent = count > 0 ? count : '';
+                        if (count <= 0) badge.style.display = 'none';
+                    }
+                }, 3000);
+            }
+        }
+
+        // Azioni rapide
+        function azione1Click(tipo) {
+            alert(`✅ ${tipo} completato con 1 click!`);
+        }
+
+        function azione2Click(tipo) {
+            alert(`✅ ${tipo} completato con 2 click!`);
+        }
+
+        function azione3Click(tipo) {
+            if (tipo === 'trasferimento') {
+                const da = prompt('Da serbatoio:', 'A1');
+                const a = prompt('A serbatoio:', 'B2');
+                const qty = prompt('Quantità (L):', '100');
+                if (da && a && qty) {
+                    alert(`✅ Trasferimento completato!\n${qty}L da ${da} a ${a}\n3 click utilizzati!`);
+                }
+            } else {
+                alert(`✅ ${tipo} completato con 3 click!`);
+            }
+        }
+
+        // Funzioni modal
         function openModal(type) {
             const modal = document.getElementById('modal-overlay');
             const title = document.getElementById('modal-title');
             const content = document.getElementById('modal-content');
             
-            // Imposta il titolo
-            switch(type) {
-                case 'conferimento':
-                    title.textContent = 'Nuovo Conferimento';
-                    content.innerHTML = getConferimentoForm();
-                    break;
-                case 'produzione':
-                    title.textContent = 'Nuova Lavorazione';
-                    content.innerHTML = getProduzioneForm();
-                    break;
-                case 'movimento':
-                    title.textContent = 'Nuovo Movimento';
-                    content.innerHTML = getMovimentoForm();
-                    break;
-            }
-            
+            title.textContent = `Nuovo ${type}`;
+            content.innerHTML = getFormContent(type);
             modal.classList.add('active');
         }
 
         function closeModal() {
-            const modal = document.getElementById('modal-overlay');
-            modal.classList.remove('active');
+            document.getElementById('modal-overlay').classList.remove('active');
         }
 
-        // Form HTML per conferimento
-        function getConferimentoForm() {
-            return `
-                <form onsubmit="submitConferimento(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Produttore</label>
-                        <input type="text" id="produttore" class="w-full p-2 border rounded-lg" required placeholder="Nome produttore o azienda">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
+        function getFormContent(type) {
+            if (type === 'conferimento') {
+                return `
+                    <form onsubmit="handleSubmit(event, 'conferimento')" class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium mb-2">Quantità (kg)</label>
-                            <input type="number" id="quantita" class="w-full p-2 border rounded-lg" required min="1">
+                            <label class="block text-sm font-medium mb-2">Produttore</label>
+                            <input type="text" name="produttore" class="w-full p-2 border rounded-lg" required>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Varietà</label>
-                            <select id="varieta" class="w-full p-2 border rounded-lg" required>
-                                <option value="">Seleziona varietà</option>
-                                <option value="Frantoio">Frantoio</option>
-                                <option value="Leccino">Leccino</option>
-                                <option value="Moraiolo">Moraiolo</option>
-                                <option value="Coratina">Coratina</option>
-                                <option value="Taggiasca">Taggiasca</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Data Raccolta</label>
-                        <input type="date" id="dataRaccolta" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                            Salva Conferimento
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        // Form HTML per produzione
-        function getProduzioneForm() {
-            return `
-                <form onsubmit="submitProduzione(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Codice Lotto</label>
-                        <input type="text" id="lotto" class="w-full p-2 border rounded-lg" placeholder="Generato automaticamente se vuoto">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Olive (kg)</label>
-                            <input type="number" id="oliveKg" class="w-full p-2 border rounded-lg" required min="1">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Temperatura (°C)</label>
-                            <input type="number" id="temperatura" class="w-full p-2 border rounded-lg" required max="27">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Sistema Estrazione</label>
-                        <select id="sistemaEstrazione" class="w-full p-2 border rounded-lg">
-                            <option value="centrifuga">Centrifuga</option>
-                            <option value="pressione">Pressione</option>
-                            <option value="percolamento">Percolamento</option>
-                        </select>
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                            Avvia Lavorazione
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        // Form HTML per movimento
-        function getMovimentoForm() {
-            return `
-                <form onsubmit="submitMovimento(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Tipo Movimento</label>
-                        <select id="tipoMovimento" class="w-full p-2 border rounded-lg">
-                            <option value="carico">Carico</option>
-                            <option value="scarico">Scarico</option>
-                            <option value="trasferimento">Trasferimento</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Prodotto</label>
-                        <select id="prodotto" class="w-full p-2 border rounded-lg" required>
-                            <option value="">Seleziona prodotto</option>
-                            <option value="extra_vergine">Olio Extra Vergine</option>
-                            <option value="biologico">Olio Biologico</option>
-                            <option value="lampante">Olio Lampante</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Quantità (L)</label>
-                            <input type="number" id="quantitaMovimento" class="w-full p-2 border rounded-lg" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Contenitore</label>
-                            <input type="text" id="contenitore" class="w-full p-2 border rounded-lg" required placeholder="es. Serbatoio A1">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Note</label>
-                        <textarea id="note" class="w-full p-2 border rounded-lg" rows="3" placeholder="Note aggiuntive..."></textarea>
-                    </div>
-                    <div class="flex justify-end space-x-2 pt-4">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
-                            Annulla
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-                            Registra Movimento
-                        </button>
-                    </div>
-                </form>
-            `;
-        }
-
-        // Funzioni SIANCheck e Invio Rapido - Stile ExtraVirgin
-        function simulateInvioSIAN() {
-            const resultDiv = document.getElementById('sian-check-result');
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = `
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600 mr-2"></div>
-                        <span>Simulazione invio SIAN in corso...</span>
-                    </div>
-                </div>
-            `;
-            
-            setTimeout(() => {
-                resultDiv.innerHTML = `
-                    <div class="bg-green-50 p-3 rounded border border-green-200">
-                        <div class="flex items-center">
-                            <i data-lucide="check-circle" class="h-4 w-4 text-green-600 mr-2"></i>
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <div class="font-medium text-green-800">✅ Simulazione completata con successo</div>
-                                <div class="text-sm text-green-600 mt-1">
-                                    • Dati validati: 12 movimenti<br>
-                                    • Formato corretto: ✓ Conforme<br>
-                                    • Esito previsto: <strong>POSITIVO</strong><br>
-                                    • Pronto per invio reale
-                                </div>
+                                <label class="block text-sm font-medium mb-2">Quantità (kg)</label>
+                                <input type="number" name="quantita" class="w-full p-2 border rounded-lg" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Varietà</label>
+                                <select name="varieta" class="w-full p-2 border rounded-lg" required>
+                                    <option value="">Seleziona</option>
+                                    <option value="Frantoio">Frantoio</option>
+                                    <option value="Leccino">Leccino</option>
+                                    <option value="Coratina">Coratina</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
+                        <div class="flex justify-end space-x-2 pt-4">
+                            <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg">
+                                Annulla
+                            </button>
+                            <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">
+                                Salva
+                            </button>
+                        </div>
+                    </form>
                 `;
-                // Re-inizializza icone dopo aggiornamento DOM
-                initializeIcons();
-            }, 2000);
+            }
+            return `<p>Form per ${type} in sviluppo...</p>`;
         }
 
-        function invioRapidoSIAN() {
-            if (confirm('Procedere con l\'invio rapido dei dati al SIAN?\n\nQuesta operazione invierà tutti i movimenti in sospeso.')) {
-                const resultDiv = document.getElementById('sian-check-result');
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600 mr-2"></div>
-                            <span>🚀 Invio rapido SIAN in corso via Web Service...</span>
-                        </div>
-                    </div>
-                `;
+        function handleSubmit(event, type) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            if (type === 'conferimento') {
+                const nuovoConferimento = {
+                    id: conferimenti.length + 1,
+                    produttore: data.produttore,
+                    quantita: parseInt(data.quantita),
+                    varieta: data.varieta,
+                    data: new Date().toISOString().split('T')[0],
+                    stato: 'in_attesa'
+                };
                 
-                setTimeout(() => {
-                    resultDiv.innerHTML = `
-                        <div class="bg-green-50 p-3 rounded border border-green-200">
-                            <div class="flex items-center">
-                                <i data-lucide="check-circle" class="h-4 w-4 text-green-600 mr-2"></i>
-                                <div>
-                                    <div class="font-medium text-green-800">🎉 Invio SIAN completato con successo!</div>
-                                    <div class="text-sm text-green-600 mt-1">
-                                        • Protocollo: SIAN2025090212345<br>
-                                        • Movimenti inviati: 12<br>
-                                        • Data/Ora: ${new Date().toLocaleString('it-IT')}<br>
-                                        • Email di conferma inviata
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    // Re-inizializza icone
-                    initializeIcons();
-                    
-                    // Aggiorna notifiche rimuovendo quella SIAN
-                    updateNotificationsAfterSIAN();
-                }, 3000);
-            }
-        }
-
-        // Azioni rapide in stile ExtraVirgin
-        function azione2Click(azione) {
-            let messaggio = '';
-            switch(azione) {
-                case 'fatture-giornaliere':
-                    messaggio = '🖨️ Stampando tutte le fatture del giorno...\n\n2 click completati!';
-                    break;
-                case 'registro-giornaliero':
-                    messaggio = '📋 Generando registro giornaliero...\n\nFunzione completata in 2 click!';
-                    break;
+                conferimenti.push(nuovoConferimento);
+                updateConferimentiTable();
+                updateDashboard();
             }
             
-            setTimeout(() => {
-                alert(messaggio);
-            }, 500);
-        }
-
-        function azione3Click(azione) {
-            if (azione === 'trasferisci-olio') {
-                const da = prompt('Da quale serbatoio? (es. A1, B2, C1):', 'A1');
-                if (da) {
-                    const a = prompt('Verso quale serbatoio? (es. A1, B2, C1):', 'B2');
-                    if (a) {
-                        const quantita = prompt('Quantità in litri:', '100');
-                        if (quantita) {
-                            alert(`⚡ Trasferimento completato!\n\n🔄 ${quantita}L da serbatoio ${da} → ${a}\n✅ Operazione completata in 3 click!`);
-                        }
-                    }
-                }
-            }
-        }
-
-        function azione1Click(azione) {
-            if (azione === 'backup-automatico') {
-                const resultDiv = document.getElementById('sian-check-result');
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `
-                    <div class="flex items-center">
-                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-600 mr-2"></div>
-                        <span>☁️ Backup automatico in corso...</span>
-                    </div>
-                `;
-                
-                setTimeout(() => {
-                    resultDiv.innerHTML = `
-                        <div class="bg-blue-50 p-3 rounded border border-blue-200">
-                            <div class="flex items-center">
-                                <i data-lucide="cloud-upload" class="h-4 w-4 text-blue-600 mr-2"></i>
-                                <div>
-                                    <div class="font-medium text-blue-800">✅ Backup completato!</div>
-                                    <div class="text-sm text-blue-600">Database salvato nel cloud - 1 click</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    initializeIcons();
-                }, 1500);
-            }
-        }
-
-        function updateNotificationsAfterSIAN() {
-            // Simula rimozione notifica SIAN dopo invio
-            const notifications = document.querySelectorAll('#dashboard-content .space-y-2 > div');
-            if (notifications[0]) {
-                notifications[0].remove();
-            }
-            // Aggiorna badge
-            const badge = document.getElementById('notification-badge');
-            if (badge) {
-                const count = parseInt(badge.textContent) - 1;
-                badge.textContent = count;
-                if (count === 0) {
-                    badge.style.display = 'none';
-                }
-            }
-        }
-            event.preventDefault();
-            
-            const nuovoConferimento = {
-                id: conferimenti.length + 1,
-                produttore: document.getElementById('produttore').value,
-                quantita: parseInt(document.getElementById('quantita').value),
-                varieta: document.getElementById('varieta').value,
-                data: new Date().toISOString().split('T')[0],
-                stato: 'in_attesa'
-            };
-            
-            conferimenti.push(nuovoConferimento);
-            updateConferimentiTable();
-            updateDashboard();
             closeModal();
-            
-            alert('Conferimento salvato con successo!');
+            alert(`${type} salvato con successo!`);
         }
 
-        function submitProduzione(event) {
-            event.preventDefault();
-            
-            const oliveKg = parseInt(document.getElementById('oliveKg').value);
-            const olioL = (oliveKg * 0.15).toFixed(1); // Resa stimata 15%
-            
-            const nuovaProduzione = {
-                id: produzioni.length + 1,
-                lotto: document.getElementById('lotto').value || `LOT${String(produzioni.length + 1).padStart(3, '0')}`,
-                oliveKg: oliveKg,
-                olioL: parseFloat(olioL),
-                resa: 15,
-                data: new Date().toISOString().split('T')[0],
-                temperatura: parseInt(document.getElementById('temperatura').value)
-            };
-            
-            produzioni.push(nuovaProduzione);
-            updateProduzioneTable();
-            updateDashboard();
-            closeModal();
-            
-            alert('Lavorazione registrata con successo!');
-        }
-
-        function submitMovimento(event) {
-            event.preventDefault();
-            closeModal();
-            alert('Movimento registrato con successo!');
-        }
-
-        // Funzioni per aggiornare le tabelle
         function updateConferimentiTable() {
             const tbody = document.getElementById('conferimenti-table');
             if (!tbody) return;
@@ -2046,7 +621,9 @@
                     <td class="px-4 py-3 text-sm">${conf.varieta}</td>
                     <td class="px-4 py-3 text-sm">${conf.data}</td>
                     <td class="px-4 py-3 text-sm">
-                        <span class="px-2 py-1 text-xs rounded-full ${getStatoClass(conf.stato)}">${conf.stato.replace('_', ' ')}</span>
+                        <span class="px-2 py-1 text-xs rounded-full ${getStatoClass(conf.stato)}">
+                            ${conf.stato.replace('_', ' ')}
+                        </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         <button class="text-blue-600 hover:text-blue-800 mr-2">Modifica</button>
@@ -2054,10 +631,6 @@
                     </td>
                 </tr>
             `).join('');
-        }
-
-        function updateProduzioneTable() {
-            // Update production table if needed
         }
 
         function getStatoClass(stato) {
@@ -2071,36 +644,21 @@
             }
         }
 
-        // Funzione per aggiornare dashboard
         function updateDashboard() {
             const totalConferimenti = conferimenti.length;
-            const totaleProduzione = produzioni.reduce((sum, prod) => sum + prod.olioL, 0);
-            const resaMedia = produzioni.length > 0 ? 
-                (produzioni.reduce((sum, prod) => sum + prod.resa, 0) / produzioni.length).toFixed(1) : 0;
-            
             document.getElementById('total-conferimenti').textContent = totalConferimenti;
-            document.getElementById('total-produzione').textContent = totaleProduzione.toFixed(1);
-            document.getElementById('resa-media').textContent = resaMedia;
         }
 
-        // Chiusura modal con click esterno
+        // Event listeners
         document.getElementById('modal-overlay').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal();
             }
         });
 
-        // Inizializzazione con timeout per Lucide
+        // Inizializzazione
         document.addEventListener('DOMContentLoaded', function() {
-            // Prova subito
-            if (!initializeIcons()) {
-                // Se fallisce, riprova dopo un breve delay
-                setTimeout(() => {
-                    initializeIcons();
-                }, 500);
-            }
-            
-            // Altre inizializzazioni
+            console.log('✅ Frantoio Manager caricato');
             updateDashboard();
         });
     </script>
