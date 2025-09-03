@@ -1,96 +1,4 @@
-<div id="clienti" class="tab-content hidden">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold">Gestione Clienti ExtraVirgin</h2>
-                        <button onclick="openModal('cliente')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                            <span class="mr-2">👥</span>
-                            Nuovo Cliente
-                        </button>
-                    </div>
-
-                    <!-- Scheda Cliente "a Colpo d'Occhio" COMPLETA -->
-                    <div class="bg-white p-4 rounded-lg border">
-                        <h3 class="font-semibold mb-3 flex items-center">
-                            <span class="mr-2">👁️</span>
-                            Scheda Cliente "a Colpo d'Occhio"
-                        </h3>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Cliente 1 -->
-                            <div class="p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border-2 border-blue-200">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div>
-                                        <h4 class="font-bold text-lg">Az. Agricola Rossi</h4>
-                                        <div class="text-sm text-gray-600">P.IVA: 12345678901</div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Attivo</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div class="space-y-1 text-sm">
-                                        <div>📞 +39 055 123456</div>
-                                        <div>📧 info@agricolarossi.it</div>
-                                        <div>🗺️ Foglio 15, Part. 142</div>
-                                        <div>🌿 Tipo: Conto Terzi + Bio</div>
-                                    </div>
-                                    <div class="space-y-1 text-sm">
-                                        <div>🏠 Via Roma 123, Firenze</div>
-                                        <div>📏 Superficie: 2.5 ha</div>
-                                        <div>🌳 Piante: 180</div>
-                                        <div>🫒 Varietà: Frantoio 60%, Leccino 40%</div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white p-3 rounded mb-4">
-                                    <h5 class="font-medium mb-2">Attività 2025</h5>
-                                    <div class="grid grid-cols-4 gap-3 text-center">
-                                        <div>
-                                            <div class="text-lg font-bold text-blue-600">8</div>
-                                            <div class="text-xs">Pesate</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-green-600">1,240</div>
-                                            <div class="text-xs">Kg olive</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-purple-600">186</div>
-                                            <div class="text-xs">L olio</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-orange-600">€2,450</div>
-                                            <div class="text-xs">Fatturato</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white p-3 rounded mb-4">
-                                    <h5 class="font-medium mb-2">Timeline Attività</h5>
-                                    <div class="space-y-2 text-sm">
-                                        <div class="flex justify-between">
-                                            <span>Ultima pesata:</span>
-                                            <span class="font-medium">01/09/2025</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Ultima molitura:</span>
-                                            <span class="font-medium">02/09/2025</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Prossima prenotazione:</span>
-                                            <span class="font-medium text-orange-600">05/09/2025 14:00</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Pagamenti:</span>
-                                            <span class="font-medium text-green-600">✅ In regola</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex space-x-2">
-                                    <button onclick="storicoCompleto('rossi')" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
-                                        📄 Storico Completo
-                                    </button>
-                                    <button onclick="fatturaRapida('rossi')" class="flex<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -128,6 +36,13 @@
         }
         .tab-content:not(.hidden) {
             display: block;
+        }
+        .cisterna {
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .cisterna:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -394,27 +309,160 @@
                 </div>
             </div>
 
-            <!-- Altri tab placeholder migliorati -->
+            <!-- Produzione 4.0 -->
             <div id="produzione" class="tab-content hidden">
                 <div class="space-y-4">
-                    <h2 class="text-2xl font-bold">Produzione 4.0</h2>
-                    <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border">
-                        <div class="text-center">
-                            <span class="text-6xl">🏭</span>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2 mt-4">Controllo Impianto in Tempo Reale</h3>
-                            <p class="text-gray-500 mb-4">Interconnessione 4.0 - Monitoraggio parametri live</p>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="bg-white p-3 rounded">
-                                    <div class="text-xl font-bold text-green-600">26.5°C</div>
-                                    <div class="text-sm">Temperatura</div>
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">Produzione 4.0</h2>
+                        <button onclick="controlloLinea()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            🏭 Controllo Linea
+                        </button>
+                    </div>
+
+                    <!-- Visualizzazione Cisterne Grafiche -->
+                    <div class="bg-white p-4 rounded-lg border">
+                        <h3 class="font-semibold mb-3">🛢️ Visualizzazione Cisterne (Live)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <!-- Cisterna A1 -->
+                            <div class="cisterna bg-gradient-to-b from-green-100 to-green-200 p-4 rounded-lg border-2 border-green-300 cursor-pointer" onclick="dettagliCisterna('A1')">
+                                <div class="text-center">
+                                    <div class="text-4xl mb-2">🛢️</div>
+                                    <div class="font-bold text-green-800">Cisterna A1</div>
+                                    <div class="text-sm text-green-600">Extra Vergine</div>
+                                    <div class="mt-2 bg-white rounded p-2">
+                                        <div class="text-lg font-bold">450L</div>
+                                        <div class="text-xs text-gray-500">90% pieno</div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="bg-white p-3 rounded">
-                                    <div class="text-xl font-bold text-blue-600">3200 rpm</div>
-                                    <div class="text-sm">Centrifuga</div>
+                            </div>
+
+                            <!-- Cisterna B2 -->
+                            <div class="cisterna bg-gradient-to-b from-yellow-100 to-yellow-200 p-4 rounded-lg border-2 border-yellow-300 cursor-pointer" onclick="dettagliCisterna('B2')">
+                                <div class="text-center">
+                                    <div class="text-4xl mb-2">🛢️</div>
+                                    <div class="font-bold text-yellow-800">Cisterna B2</div>
+                                    <div class="text-sm text-yellow-600">🌿 Biologico</div>
+                                    <div class="mt-2 bg-white rounded p-2">
+                                        <div class="text-lg font-bold">320L</div>
+                                        <div class="text-xs text-gray-500">64% pieno</div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 64%"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="bg-white p-3 rounded">
-                                    <div class="text-xl font-bold text-purple-600">15.8%</div>
-                                    <div class="text-sm">Resa live</div>
+                            </div>
+
+                            <!-- Cisterna C1 -->
+                            <div class="cisterna bg-gradient-to-b from-purple-100 to-purple-200 p-4 rounded-lg border-2 border-purple-300 cursor-pointer" onclick="dettagliCisterna('C1')">
+                                <div class="text-center">
+                                    <div class="text-4xl mb-2">🛢️</div>
+                                    <div class="font-bold text-purple-800">Cisterna C1</div>
+                                    <div class="text-sm text-purple-600">🏆 DOP Toscano</div>
+                                    <div class="mt-2 bg-white rounded p-2">
+                                        <div class="text-lg font-bold">180L</div>
+                                        <div class="text-xs text-gray-500">60% pieno</div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                            <div class="bg-purple-600 h-2 rounded-full" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cisterna D1 -->
+                            <div class="cisterna bg-gradient-to-b from-red-100 to-red-200 p-4 rounded-lg border-2 border-red-300 cursor-pointer" onclick="dettagliCisterna('D1')">
+                                <div class="text-center">
+                                    <div class="text-4xl mb-2">🛢️</div>
+                                    <div class="font-bold text-red-800">Cisterna D1</div>
+                                    <div class="text-sm text-red-600">Lampante</div>
+                                    <div class="mt-2 bg-white rounded p-2">
+                                        <div class="text-lg font-bold">95L</div>
+                                        <div class="text-xs text-gray-500">19% pieno</div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                            <div class="bg-red-600 h-2 rounded-full" style="width: 19%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Linea Imbottigliamento -->
+                    <div class="bg-white p-4 rounded-lg border">
+                        <h3 class="font-semibold mb-3">🍾 Linea Imbottigliamento Live</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="text-center p-4 bg-blue-50 rounded">
+                                <div class="text-xl font-bold">Stato Linea</div>
+                                <div id="linea-status" class="text-2xl font-bold text-blue-600">ATTIVA</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded">
+                                <div class="text-xl font-bold">Bottiglie Oggi</div>
+                                <div id="bottiglie-oggi" class="text-2xl font-bold text-green-600">1,240</div>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded">
+                                <div class="text-xl font-bold">Velocità</div>
+                                <div class="text-2xl font-bold text-purple-600">120 b/h</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Magazzino -->
+            <div id="magazzino" class="tab-content hidden">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">Sistema Magazzino</h2>
+                        <div class="flex space-x-2">
+                            <button onclick="gestioneStock('premium')" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                📦 Gestione Stock
+                            </button>
+                            <button onclick="stampaEtichette('premium')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                🏷️ Stampa Etichette
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tracciabilità Completa -->
+                    <div class="bg-white p-4 rounded-lg border">
+                        <h3 class="font-semibold mb-3">🔍 Tracciabilità "Dall'Albero alla Bottiglia"</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-green-50 p-4 rounded border">
+                                <h4 class="font-medium mb-2">Extra Vergine Premium</h4>
+                                <div class="space-y-1 text-sm">
+                                    <div>📦 Giacenza: 240 bottiglie</div>
+                                    <div>💰 Valore: €3,240</div>
+                                    <div>📍 Ubicazione: Magazzino A-12</div>
+                                    <div>🏷️ Lotto: EV2025090301</div>
+                                </div>
+                                <div class="mt-3">
+                                    <button onclick="gestioneStock('premium')" class="text-blue-600 hover:underline text-sm">Gestisci</button>
+                                </div>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded border">
+                                <h4 class="font-medium mb-2">🌿 Biologico</h4>
+                                <div class="space-y-1 text-sm">
+                                    <div>📦 Giacenza: 180 bottiglie</div>
+                                    <div>💰 Valore: €2,520</div>
+                                    <div>📍 Ubicazione: Magazzino B-08</div>
+                                    <div>🏷️ Certificato: IT-BIO-009</div>
+                                </div>
+                                <div class="mt-3">
+                                    <button onclick="certificazioneBio()" class="text-green-600 hover:underline text-sm">Certificazione</button>
+                                </div>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded border">
+                                <h4 class="font-medium mb-2">🏆 DOP Toscano</h4>
+                                <div class="space-y-1 text-sm">
+                                    <div>📦 Giacenza: 95 bottiglie</div>
+                                    <div>💰 Valore: €1,425</div>
+                                    <div>📍 Ubicazione: Magazzino C-15</div>
+                                    <div>🏷️ Controllo: CT-2025-045</div>
+                                </div>
+                                <div class="mt-3">
+                                    <button onclick="gestioneDOP()" class="text-purple-600 hover:underline text-sm">Gestione DOP</button>
                                 </div>
                             </div>
                         </div>
@@ -422,19 +470,7 @@
                 </div>
             </div>
 
-            <div id="magazzino" class="tab-content hidden">
-                <div class="space-y-4">
-                    <h2 class="text-2xl font-bold">Sistema Magazzino</h2>
-                    <div class="bg-white p-6 rounded-lg border">
-                        <div class="text-center">
-                            <span class="text-6xl">📦</span>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2 mt-4">Tracciabilità "Dall'Albero alla Bottiglia"</h3>
-                            <p class="text-gray-500">Gestione completa magazzino e confezionamento</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <!-- SIAN Rapido -->
             <div id="sian" class="tab-content hidden">
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
@@ -476,19 +512,197 @@
                 </div>
             </div>
 
+            <!-- Clienti -->
             <div id="clienti" class="tab-content hidden">
                 <div class="space-y-4">
-                    <h2 class="text-2xl font-bold">Gestione Clienti</h2>
-                    <div class="bg-white p-6 rounded-lg border">
-                        <div class="text-center">
-                            <span class="text-6xl">👥</span>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2 mt-4">Scheda Cliente "a Colpo d'Occhio"</h3>
-                            <p class="text-gray-500">Controllo completo attività associate per cliente</p>
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">Gestione Clienti ExtraVirgin</h2>
+                        <button onclick="openModal('cliente')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            <span class="mr-2">👥</span>
+                            Nuovo Cliente
+                        </button>
+                    </div>
+
+                    <!-- Scheda Cliente "a Colpo d'Occhio" COMPLETA -->
+                    <div class="bg-white p-4 rounded-lg border">
+                        <h3 class="font-semibold mb-3 flex items-center">
+                            <span class="mr-2">👁️</span>
+                            Scheda Cliente "a Colpo d'Occhio"
+                        </h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Cliente 1 -->
+                            <div class="p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border-2 border-blue-200">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h4 class="font-bold text-lg">Az. Agricola Rossi</h4>
+                                        <div class="text-sm text-gray-600">P.IVA: 12345678901</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Attivo</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="space-y-1 text-sm">
+                                        <div>📞 +39 055 123456</div>
+                                        <div>📧 info@agricolarossi.it</div>
+                                        <div>🗺️ Foglio 15, Part. 142</div>
+                                        <div>🌿 Tipo: Conto Terzi + Bio</div>
+                                    </div>
+                                    <div class="space-y-1 text-sm">
+                                        <div>🏠 Via Roma 123, Firenze</div>
+                                        <div>📏 Superficie: 2.5 ha</div>
+                                        <div>🌳 Piante: 180</div>
+                                        <div>🫒 Varietà: Frantoio 60%, Leccino 40%</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded mb-4">
+                                    <h5 class="font-medium mb-2">Attività 2025</h5>
+                                    <div class="grid grid-cols-4 gap-3 text-center">
+                                        <div>
+                                            <div class="text-lg font-bold text-blue-600">8</div>
+                                            <div class="text-xs">Pesate</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-lg font-bold text-green-600">1,240</div>
+                                            <div class="text-xs">Kg olive</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-lg font-bold text-purple-600">186</div>
+                                            <div class="text-xs">L olio</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-lg font-bold text-orange-600">€2,450</div>
+                                            <div class="text-xs">Fatturato</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded mb-4">
+                                    <h5 class="font-medium mb-2">Timeline Attività</h5>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <span>Ultima pesata:</span>
+                                            <span class="font-medium">01/09/2025</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Ultima molitura:</span>
+                                            <span class="font-medium">02/09/2025</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Prossima prenotazione:</span>
+                                            <span class="font-medium text-orange-600">05/09/2025 14:00</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Pagamenti:</span>
+                                            <span class="font-medium text-green-600">✅ In regola</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex space-x-2">
+                                    <button onclick="storicoCompleto('rossi')" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
+                                        📄 Storico Completo
+                                    </button>
+                                    <button onclick="fatturaRapida('rossi')" class="flex-1 bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700">
+                                        💰 Fattura Rapida
+                                    </button>
+                                    <button onclick="contattaCliente('rossi')" class="flex-1 bg-purple-600 text-white py-2 px-3 rounded text-sm hover:bg-purple-700">
+                                        📱 Contatta
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Cliente 2 -->
+                            <div class="p-4 bg-gradient-to-r from-yellow-50 to-green-50 rounded-lg border-2 border-yellow-200">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h4 class="font-bold text-lg">Oleificio Bio Verde</h4>
+                                        <div class="text-sm text-gray-600">P.IVA: 09876543210</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">🌿 Biologico</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="space-y-1 text-sm">
+                                        <div>📞 +39 055 654321</div>
+                                        <div>📧 bio@olioverde.it</div>
+                                        <div>🗺️ Foglio 23, Part. 89</div>
+                                        <div>🌿 Cert.: IT-BIO-009</div>
+                                    </div>
+                                    <div class="space-y-1 text-sm">
+                                        <div>🏠 Via Verde 45, Siena</div>
+                                        <div>📏 Superficie: 4.2 ha</div>
+                                        <div>🌳 Piante: 320 (Bio)</div>
+                                        <div>🫒 Varietà: Leccino 70%, Moraiolo 30%</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded mb-4">
+                                    <h5 class="font-medium mb-2">Attività 2025 (Bio)</h5>
+                                    <div class="grid grid-cols-4 gap-3 text-center">
+                                        <div>
+                                            <div class="text-lg font-bold text-blue-600">12</div>
+                                            <div class="text-xs">Pesate</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-lg font-bold text-green-600">2,180</div>
+                                            <div class="text-xs">Kg olive</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-lg font-bold text-purple-600">327</div>
+                                            <div class="text-xs">L olio</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-lg font-bold text-orange-600">€4,860</div>
+                                            <div class="text-xs">Fatturato</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded mb-4">
+                                    <h5 class="font-medium mb-2">Timeline Bio</h5>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <span>Ultima pesata:</span>
+                                            <span class="font-medium">03/09/2025</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Controllo ICEA:</span>
+                                            <span class="font-medium text-green-600">✅ 15/08/2025</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Prossima prenotazione:</span>
+                                            <span class="font-medium text-orange-600">06/09/2025 09:00</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Certificato Bio:</span>
+                                            <span class="font-medium text-green-600">✅ Valido 31/12/2025</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex space-x-2">
+                                    <button onclick="storicoCompleto('verde')" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
+                                        📄 Storico Bio
+                                    </button>
+                                    <button onclick="fatturaRapida('verde')" class="flex-1 bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700">
+                                        💰 Fattura Bio
+                                    </button>
+                                    <button onclick="contattaCliente('verde')" class="flex-1 bg-yellow-600 text-white py-2 px-3 rounded text-sm hover:bg-yellow-700">
+                                        📱 Contatta
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Impostazioni -->
             <div id="impostazioni" class="tab-content hidden">
                 <div class="space-y-4">
                     <h2 class="text-2xl font-bold">Configurazione ExtraVirgin</h2>
@@ -538,6 +752,192 @@
 
         // Variabili globali
         let currentTab = 'dashboard';
+
+        // ========================
+        // NUOVE FUNZIONI COMPLETE - ExtraVirgin 100%
+        // ========================
+
+        // Gestione Cisterne Grafiche
+        function dettagliCisterna(id) {
+            const cisterne = {
+                'A1': { nome: 'Cisterna A1', tipo: 'Extra Vergine', capacita: 500, livello: 450, temp: 18.2, origine: 'MOL001, MOL003' },
+                'B2': { nome: 'Cisterna B2', tipo: 'Biologico', capacita: 500, livello: 320, temp: 17.8, origine: 'MOL002 (Bio)' },
+                'C1': { nome: 'Cisterna C1', tipo: 'DOP Toscano', capacita: 300, livello: 180, temp: 18.5, origine: 'MOL004 (DOP)' },
+                'D1': { nome: 'Cisterna D1', tipo: 'Lampante', capacita: 500, livello: 95, temp: 19.2, origine: 'MOL005' }
+            };
+            
+            const cisterna = cisterne[id];
+            if (cisterna) {
+                alert(`🛢️ DETTAGLI ${cisterna.nome.toUpperCase()}\n\n` +
+                      `📊 Tipo: ${cisterna.tipo}\n` +
+                      `📏 Capacità: ${cisterna.capacita}L\n` +
+                      `🔵 Livello attuale: ${cisterna.livello}L (${Math.round(cisterna.livello/cisterna.capacita*100)}%)\n` +
+                      `🌡️ Temperatura: ${cisterna.temp}°C ${cisterna.temp > 19 ? '⚠️' : '✅'}\n` +
+                      `🔗 Origine: ${cisterna.origine}\n\n` +
+                      `${cisterna.temp > 19 ? '⚠️ ATTENZIONE: Temperatura elevata!' : '✅ Parametri nella norma'}`);
+            }
+        }
+
+        // Controllo Linea Imbottigliamento
+        function controlloLinea() {
+            const statusElement = document.getElementById('linea-status');
+            const bottiglieElement = document.getElementById('bottiglie-oggi');
+            
+            if (statusElement && bottiglieElement) {
+                const isAttiva = statusElement.textContent === 'ATTIVA';
+                if (isAttiva) {
+                    statusElement.textContent = 'PAUSA';
+                    statusElement.className = 'text-2xl font-bold text-yellow-600';
+                    alert('⏸️ Linea imbottigliamento messa in pausa\n\n🛑 Produzione interrotta\n📊 Bottiglie prodotte oggi: ' + bottiglieElement.textContent);
+                } else {
+                    statusElement.textContent = 'ATTIVA';
+                    statusElement.className = 'text-2xl font-bold text-blue-600';
+                    const nuoveBottiglie = parseInt(bottiglieElement.textContent.replace(/,/g, '')) + Math.floor(Math.random() * 50 + 10);
+                    bottiglieElement.textContent = nuoveBottiglie.toLocaleString();
+                    alert('▶️ Linea imbottigliamento riavviata\n\n✅ Produzione attiva\n🍾 Nuove bottiglie in produzione');
+                }
+            }
+        }
+
+        // Gestione Stock Magazzino
+        function gestioneStock(tipo) {
+            const prodotti = {
+                'premium': { nome: 'Extra Vergine Premium', bottiglie: 240, valore: 3240 }
+            };
+            
+            const prodotto = prodotti[tipo];
+            if (prodotto) {
+                const azione = prompt(`📦 GESTIONE STOCK - ${prodotto.nome}\n\nAzioni disponibili:\n1. Carico nuove bottiglie\n2. Scarico vendita\n3. Inventario\n4. Movimento\n\nDigita il numero dell'azione:`, '1');
+                
+                switch(azione) {
+                    case '1':
+                        const carico = prompt('Quante bottiglie caricare?', '50');
+                        if (carico) alert(`✅ Caricato stock!\n\n📦 +${carico} bottiglie\n💰 Valore aggiornato\n📋 Registro magazzino aggiornato`);
+                        break;
+                    case '2':
+                        const scarico = prompt('Quante bottiglie vendute?', '20');
+                        if (scarico) alert(`✅ Scaricato stock!\n\n📦 -${scarico} bottiglie\n💰 Fatturato: €${scarico * 12}\n📋 Documento di trasporto generato`);
+                        break;
+                    case '3':
+                        alert(`📊 INVENTARIO ${prodotto.nome}\n\n📦 Giacenze: ${prodotto.bottiglie} pz\n💰 Valore: €${prodotto.valore}\n📍 Ubicazione: Magazzino A-12\n📅 Ultimo movimento: oggi`);
+                        break;
+                    case '4':
+                        alert(`🔄 MOVIMENTO STOCK\n\n📋 Registrazione movimento magazzino\n📦 Tracciabilità lotto completa\n✅ SIAN aggiornato automaticamente`);
+                        break;
+                }
+            }
+        }
+
+        // Stampa Etichette Avanzata
+        function stampaEtichette(tipo) {
+            const etichette = {
+                'premium': 'Extra Vergine Premium - Layout Luxury'
+            };
+            
+            const layout = etichette[tipo] || tipo;
+            const quantita = prompt(`🏷️ STAMPA ETICHETTE\n\nTipo: ${layout}\n\nQuante etichette stampare?`, '100');
+            
+            if (quantita) {
+                alert(`🖨️ STAMPA AVVIATA!\n\n🏷️ Tipo: ${layout}\n📊 Quantità: ${quantita} etichette\n📄 Layout: Conforme normativa UE\n🎨 Qualità: 300 DPI\n\n✅ Invio alla stampante completato`);
+            }
+        }
+
+        // Certificazione Bio
+        function certificazioneBio() {
+            alert(`🌿 GESTIONE CERTIFICAZIONI BIOLOGICHE\n\n` +
+                  `📋 Certificato: IT-BIO-009\n` +
+                  `👨‍🌾 Operatore: OP-9854\n` +
+                  `📅 Scadenza: 31/12/2025\n` +
+                  `🏢 Ente: ICEA\n` +
+                  `📊 Controlli: 3/anno\n` +
+                  `📄 Prossimo controllo: 15/11/2025\n\n` +
+                  `✅ Certificazione valida e aggiornata`);
+        }
+
+        // Gestione DOP
+        function gestioneDOP() {
+            alert(`🏆 GESTIONE DOP TOSCANO IGP\n\n` +
+                  `📜 Denominazione: Toscano IGP\n` +
+                  `🎯 Numero Controllo: CT-2025-045\n` +
+                  `📍 Zona Produzione: Chianti Classico\n` +
+                  `🏛️ Consorzio: Consorzio Olio Toscano IGP\n` +
+                  `📋 Disciplinare: Rispettato 100%\n` +
+                  `🏷️ Etichettatura: Conforme DOP\n\n` +
+                  `✅ Requisiti DOP soddisfatti`);
+        }
+
+        // Storico Cliente Completo
+        function storicoCompleto(cliente) {
+            const clienti = {
+                'rossi': 'Az. Agricola Rossi',
+                'verde': 'Oleificio Bio Verde'
+            };
+            
+            const nome = clienti[cliente];
+            alert(`📄 STORICO COMPLETO - ${nome}\n\n` +
+                  `📊 ANNO 2025:\n` +
+                  `• Pesate: 12 (1.850kg totali)\n` +
+                  `• Moliture: 10 completate\n` +
+                  `• Olio prodotto: 277L (resa 15.0%)\n` +
+                  `• Fatturato: €3.240\n\n` +
+                  `📈 TREND:\n` +
+                  `• +15% vs 2024\n` +
+                  `• Resa migliorata del 2%\n` +
+                  `• Pagamenti puntuali\n\n` +
+                  `✅ Cliente affidabile e in crescita`);
+        }
+
+        // Fattura Rapida
+        function fatturaRapida(cliente) {
+            const clienti = {
+                'rossi': { nome: 'Az. Agricola Rossi', importo: 245 },
+                'verde': { nome: 'Oleificio Bio Verde', importo: 420 }
+            };
+            
+            const dati = clienti[cliente];
+            if (dati) {
+                alert(`💰 FATTURA RAPIDA GENERATA!\n\n` +
+                      `👤 Cliente: ${dati.nome}\n` +
+                      `💶 Importo: €${dati.importo}\n` +
+                      `📅 Data: ${new Date().toLocaleDateString('it-IT')}\n` +
+                      `📊 IVA: Regime agricolo\n\n` +
+                      `✅ Fattura elettronica inviata AdE\n` +
+                      `📧 Email inviata al cliente\n` +
+                      `📋 Scadenza: 30 giorni`);
+            }
+        }
+
+        // Contatta Cliente
+        function contattaCliente(cliente) {
+            const clienti = {
+                'rossi': { nome: 'Az. Agricola Rossi', tel: '+39 055 123456' },
+                'verde': { nome: 'Oleificio Bio Verde', tel: '+39 055 654321' }
+            };
+            
+            const dati = clienti[cliente];
+            if (dati) {
+                const metodo = prompt(`📱 CONTATTA ${dati.nome}\n\nScegli metodo:\n1. WhatsApp\n2. SMS\n3. Chiamata\n4. Email\n\nDigita numero:`, '1');
+                
+                switch(metodo) {
+                    case '1':
+                        alert(`📱 WhatsApp inviato a ${dati.nome}!\n\n💬 Messaggio: "La sua molitura è pronta"\n📞 ${dati.tel}\n✅ Messaggio consegnato`);
+                        break;
+                    case '2':
+                        alert(`📲 SMS inviato a ${dati.nome}!\n\n💬 Testo: "Molitura completata"\n📞 ${dati.tel}\n✅ SMS consegnato`);
+                        break;
+                    case '3':
+                        alert(`📞 Chiamata a ${dati.nome}\n\n📞 Numero: ${dati.tel}\n🔗 Collegamento automatico...\n✅ Chiamata avviata`);
+                        break;
+                    case '4':
+                        alert(`📧 Email inviata a ${dati.nome}!\n\n📨 Oggetto: "Molitura completata"\n📋 Allegati: DDT, analisi olio\n✅ Email consegnata`);
+                        break;
+                }
+            }
+        }
+
+        // ========================
+        // FUNZIONI BASE SISTEMA
+        // ========================
 
         // Funzione per cambiare tab
         function showTab(tabName) {
@@ -686,6 +1086,10 @@
                     title.textContent = 'Pesata Multipla ExtraVirgin';
                     content.innerHTML = getPesataMultiplaForm();
                     break;
+                case 'cliente':
+                    title.textContent = 'Nuovo Cliente';
+                    content.innerHTML = getClienteForm();
+                    break;
                 default:
                     title.textContent = 'Nuovo ' + type;
                     content.innerHTML = '<p>Funzionalità in sviluppo...</p>';
@@ -790,6 +1194,64 @@
             `;
         }
 
+        function getClienteForm() {
+            return `
+                <form onsubmit="salvaCliente(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Ragione Sociale</label>
+                            <input type="text" name="ragione_sociale" class="w-full p-2 border rounded-lg" required placeholder="Az. Agricola...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">P.IVA</label>
+                            <input type="text" name="piva" class="w-full p-2 border rounded-lg" required placeholder="12345678901">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Telefono</label>
+                            <input type="tel" name="telefono" class="w-full p-2 border rounded-lg" placeholder="+39 055 123456">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" name="email" class="w-full p-2 border rounded-lg" placeholder="info@azienda.it">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Indirizzo</label>
+                        <input type="text" name="indirizzo" class="w-full p-2 border rounded-lg" placeholder="Via Roma 123, Firenze">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Foglio Catastale</label>
+                            <input type="text" name="foglio" class="w-full p-2 border rounded-lg" placeholder="15">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Particella</label>
+                            <input type="text" name="particella" class="w-full p-2 border rounded-lg" placeholder="142">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tipo Produzione</label>
+                        <select name="tipo_produzione" class="w-full p-2 border rounded-lg">
+                            <option value="convenzionale">Convenzionale</option>
+                            <option value="biologico">🌿 Biologico</option>
+                            <option value="dop">🏆 DOP/IGP</option>
+                            <option value="misto">Misto</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-4">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg">
+                            Annulla
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                            👥 Registra Cliente
+                        </button>
+                    </div>
+                </form>
+            `;
+        }
+
         function acquisirePesoForm() {
             const pesoInput = document.querySelector('input[name="peso"]');
             if (pesoInput) {
@@ -810,7 +1272,16 @@
 
         function salvaPesataMultipla(event) {
             event.preventDefault();
-            alert(`🏗️ Pesata multipla creata!\n\n📊 Lotti raggruppati sotto registrazione unificata\n📋 Tracciabilità mantenuta per varietà\n✅ Ottimizzazione complete per molitura`);
+            alert(`🏗️ Pesata multipla creata!\n\n📊 Lotti raggruppati sotto registrazione unificata\n📋 Tracciabilità mantenuta per varietà\n✅ Ottimizzazione completa per molitura`);
+            closeModal();
+        }
+
+        function salvaCliente(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            alert(`👥 Cliente registrato con successo!\n\n📊 Dettagli:\n• Ragione Sociale: ${data.ragione_sociale}\n• P.IVA: ${data.piva}\n• Tipo: ${data.tipo_produzione}\n\n📋 Anagrafica aggiornata\n✅ Pronto per nuove pesate`);
             closeModal();
         }
 
