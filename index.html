@@ -548,6 +548,40 @@
             <div id="impostazioni" class="tab-content hidden">
                 <div class="space-y-4">
                     <h2 class="text-2xl font-bold">Configurazione ExtraVirgin</h2>
+                    
+                    <!-- Gestione Dati -->
+                    <div class="bg-white p-4 rounded-lg border">
+                        <h3 class="font-semibold mb-3">🗑️ Gestione Dati</h3>
+                        <p class="text-sm text-gray-600 mb-4">Cancella dati selettivamente o reset completo sistema</p>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                            <button onclick="resetPesate()" class="bg-yellow-50 p-3 rounded-lg text-center hover:bg-yellow-100 border border-yellow-200">
+                                <div class="text-2xl mb-1">📋</div>
+                                <div class="text-sm font-medium">Reset Pesate</div>
+                                <div class="text-xs text-gray-500">Solo pesate</div>
+                            </button>
+                            <button onclick="resetClienti()" class="bg-blue-50 p-3 rounded-lg text-center hover:bg-blue-100 border border-blue-200">
+                                <div class="text-2xl mb-1">👥</div>
+                                <div class="text-sm font-medium">Reset Clienti</div>
+                                <div class="text-xs text-gray-500">Solo anagrafica</div>
+                            </button>
+                            <button onclick="svuotaCisterne()" class="bg-purple-50 p-3 rounded-lg text-center hover:bg-purple-100 border border-purple-200">
+                                <div class="text-2xl mb-1">🛢️</div>
+                                <div class="text-sm font-medium">Svuota Cisterne</div>
+                                <div class="text-xs text-gray-500">Solo livelli</div>
+                            </button>
+                            <button onclick="resetSistema()" class="bg-red-50 p-3 rounded-lg text-center hover:bg-red-100 border border-red-200">
+                                <div class="text-2xl mb-1">🗑️</div>
+                                <div class="text-sm font-medium">Reset Completo</div>
+                                <div class="text-xs text-red-600">Tutto</div>
+                            </button>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-3 rounded text-sm">
+                            <strong>⚠️ Importante:</strong> Le cancellazioni sono definitive. Usa il backup cloud prima di operazioni massive.
+                        </div>
+                    </div>
+                    
                     <div class="bg-white p-4 rounded-lg border">
                         <h3 class="font-semibold mb-3">⚙️ Sistema Modularità</h3>
                         <p class="text-sm text-gray-600 mb-4">Acquista solo le funzioni necessarie + personalizzazioni</p>
@@ -559,6 +593,7 @@
                                     <div class="flex items-center"><span class="text-green-600 mr-2">✅</span> Tracciabilità Completa</div>
                                     <div class="flex items-center"><span class="text-green-600 mr-2">✅</span> Fatturazione Elettronica</div>
                                     <div class="flex items-center"><span class="text-green-600 mr-2">✅</span> Interconnessione 4.0</div>
+                                    <div class="flex items-center"><span class="text-green-600 mr-2">✅</span> Gestione Dati Avanzata</div>
                                 </div>
                             </div>
                             <div>
@@ -567,6 +602,7 @@
                                     <p>📞 Intervento remoto entro 2h</p>
                                     <p>🤖 AI Monitoring attivo</p>
                                     <p>📧 Email automatiche di stato</p>
+                                    <p>🗑️ Backup automatico prima dei reset</p>
                                 </div>
                             </div>
                         </div>
@@ -1236,6 +1272,26 @@
             }
         }
 
+        // Funzione per aggiornare tutti i KPI automaticamente
+        function aggiornaTuttiKPI() {
+            kpiData.pesateOggi = pesateGiornaliere.length;
+            
+            // Calcola olio prodotto (pesate finite * resa stimata)
+            const pesateFinite = pesateGiornaliere.filter(p => p.stato === 'Molita');
+            kpiData.olioprodotto = pesateFinite.reduce((tot, p) => tot + (p.peso * 0.15), 0); // Resa 15%
+            
+            // Calcola resa media
+            if (pesateFinite.length > 0) {
+                const pesoTotale = pesateFinite.reduce((tot, p) => tot + p.peso, 0);
+                kpiData.resaMedia = (kpiData.olioprodotto / pesoTotale) * 100;
+            }
+            
+            // Calcola giacenze dalle cisterne
+            kpiData.giacenze = Object.values(cisterne).reduce((tot, c) => tot + c.livello, 0);
+            
+            aggiornaKPI();
+        }
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
             // Modal click outside to close
@@ -1253,8 +1309,12 @@
             // Simula aggiornamenti sensori
             setInterval(updatePesoLive, 8000);
             
-            // Inizializza KPI vuoti
-            aggiornaKPI();
+            // Inizializza KPI vuoti - Controllo che gli elementi esistano
+            setTimeout(() => {
+                if (document.getElementById('kpi-pesate')) {
+                    aggiornaKPI();
+                }
+            }, 100);
             
             // Messaggio di benvenuto
             setTimeout(() => {
