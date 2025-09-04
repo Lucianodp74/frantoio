@@ -834,8 +834,79 @@
 
         // Funzione per aggiornare la sezione clienti quando il primo cliente viene aggiunto
         function aggiornaSezioneClienti() {
-            // Potresti implementare qui la logica per aggiornare l'interfaccia
-            // quando vengono aggiunti clienti reali
+            // Trova il contenitore clienti
+            const containerClienti = document.querySelector('#clienti .grid');
+            if (!containerClienti) return;
+            
+            if (clientiRegistrati.length === 0) {
+                // Mostra messaggio "nessun cliente"
+                containerClienti.innerHTML = `
+                    <div class="col-span-2 text-center py-12 bg-gray-50 rounded-lg">
+                        <div class="text-6xl mb-4">👥</div>
+                        <h4 class="text-lg font-medium text-gray-700 mb-2">Nessun cliente registrato</h4>
+                        <p class="text-gray-500 mb-4">Inizia aggiungendo i tuoi primi clienti</p>
+                        <button onclick="openModal('cliente')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                            👥 Aggiungi Primo Cliente
+                        </button>
+                    </div>
+                `;
+            } else {
+                // Mostra lista clienti reali
+                let htmlClienti = '';
+                clientiRegistrati.forEach((cliente, index) => {
+                    const colore = index % 2 === 0 ? 'from-blue-50 to-green-50 border-blue-200' : 'from-yellow-50 to-green-50 border-yellow-200';
+                    htmlClienti += `
+                        <div class="p-4 bg-gradient-to-r ${colore} rounded-lg border-2">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h4 class="font-bold text-lg">${cliente.ragioneSociale}</h4>
+                                    <div class="text-sm text-gray-600">P.IVA: ${cliente.piva}</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Attivo</div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="space-y-1 text-sm">
+                                    <div>📞 ${cliente.telefono || 'Non specificato'}</div>
+                                    <div>📧 ${cliente.email || 'Non specificata'}</div>
+                                    <div>🗺️ Foglio ${cliente.foglio}, Part. ${cliente.particella}</div>
+                                    <div>🌿 Tipo: ${cliente.tipoProduzione}</div>
+                                </div>
+                                <div class="space-y-1 text-sm">
+                                    <div>🏠 ${cliente.indirizzo || 'Non specificato'}</div>
+                                    <div>📅 Registrato: ${new Date(cliente.dataRegistrazione).toLocaleDateString('it-IT')}</div>
+                                    <div>📊 Pesate associate: ${contaPesateCliente(cliente.ragioneSociale)}</div>
+                                    <div>✅ Sistema attivo</div>
+                                </div>
+                            </div>
+
+                            <div class="flex space-x-2">
+                                <button onclick="storicoCompleto('${cliente.id}')" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
+                                    📄 Storico
+                                </button>
+                                <button onclick="fatturaRapida('${cliente.id}')" class="flex-1 bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700">
+                                    💰 Fattura
+                                </button>
+                                <button onclick="contattaCliente('${cliente.id}')" class="flex-1 bg-purple-600 text-white py-2 px-3 rounded text-sm hover:bg-purple-700">
+                                    📱 Contatta
+                                </button>
+                                <button onclick="cancellaCliente(${cliente.id})" class="bg-red-600 text-white py-2 px-3 rounded text-sm hover:bg-red-700">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                containerClienti.innerHTML = htmlClienti;
+            }
+        }
+
+        // Funzione di supporto per contare pesate per cliente
+        function contaPesateCliente(nomeCliente) {
+            return pesateGiornaliere.filter(p => p.produttore === nomeCliente).length;
         }
 
         // Aggiorna funzione molire per sistema reale
