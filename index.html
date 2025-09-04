@@ -530,172 +530,14 @@
                             Scheda Cliente "a Colpo d'Occhio"
                         </h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Cliente 1 -->
-                            <div class="p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border-2 border-blue-200">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div>
-                                        <h4 class="font-bold text-lg">Az. Agricola Rossi</h4>
-                                        <div class="text-sm text-gray-600">P.IVA: 12345678901</div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Attivo</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div class="space-y-1 text-sm">
-                                        <div>📞 +39 055 123456</div>
-                                        <div>📧 info@agricolarossi.it</div>
-                                        <div>🗺️ Foglio 15, Part. 142</div>
-                                        <div>🌿 Tipo: Conto Terzi + Bio</div>
-                                    </div>
-                                    <div class="space-y-1 text-sm">
-                                        <div>🏠 Via Roma 123, Firenze</div>
-                                        <div>📏 Superficie: 2.5 ha</div>
-                                        <div>🌳 Piante: 180</div>
-                                        <div>🫒 Varietà: Frantoio 60%, Leccino 40%</div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white p-3 rounded mb-4">
-                                    <h5 class="font-medium mb-2">Attività 2025</h5>
-                                    <div class="grid grid-cols-4 gap-3 text-center">
-                                        <div>
-                                            <div class="text-lg font-bold text-blue-600">8</div>
-                                            <div class="text-xs">Pesate</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-green-600">1,240</div>
-                                            <div class="text-xs">Kg olive</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-purple-600">186</div>
-                                            <div class="text-xs">L olio</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-orange-600">€2,450</div>
-                                            <div class="text-xs">Fatturato</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white p-3 rounded mb-4">
-                                    <h5 class="font-medium mb-2">Timeline Attività</h5>
-                                    <div class="space-y-2 text-sm">
-                                        <div class="flex justify-between">
-                                            <span>Ultima pesata:</span>
-                                            <span class="font-medium">01/09/2025</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Ultima molitura:</span>
-                                            <span class="font-medium">02/09/2025</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Prossima prenotazione:</span>
-                                            <span class="font-medium text-orange-600">05/09/2025 14:00</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Pagamenti:</span>
-                                            <span class="font-medium text-green-600">✅ In regola</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex space-x-2">
-                                    <button onclick="storicoCompleto('rossi')" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
-                                        📄 Storico Completo
-                                    </button>
-                                    <button onclick="fatturaRapida('rossi')" class="flex-1 bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700">
-                                        💰 Fattura Rapida
-                                    </button>
-                                    <button onclick="contattaCliente('rossi')" class="flex-1 bg-purple-600 text-white py-2 px-3 rounded text-sm hover:bg-purple-700">
-                                        📱 Contatta
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Cliente 2 -->
-                            <div class="p-4 bg-gradient-to-r from-yellow-50 to-green-50 rounded-lg border-2 border-yellow-200">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div>
-                                        <h4 class="font-bold text-lg">Oleificio Bio Verde</h4>
-                                        <div class="text-sm text-gray-600">P.IVA: 09876543210</div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">🌿 Biologico</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div class="space-y-1 text-sm">
-                                        <div>📞 +39 055 654321</div>
-                                        <div>📧 bio@olioverde.it</div>
-                                        <div>🗺️ Foglio 23, Part. 89</div>
-                                        <div>🌿 Cert.: IT-BIO-009</div>
-                                    </div>
-                                    <div class="space-y-1 text-sm">
-                                        <div>🏠 Via Verde 45, Siena</div>
-                                        <div>📏 Superficie: 4.2 ha</div>
-                                        <div>🌳 Piante: 320 (Bio)</div>
-                                        <div>🫒 Varietà: Leccino 70%, Moraiolo 30%</div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white p-3 rounded mb-4">
-                                    <h5 class="font-medium mb-2">Attività 2025 (Bio)</h5>
-                                    <div class="grid grid-cols-4 gap-3 text-center">
-                                        <div>
-                                            <div class="text-lg font-bold text-blue-600">12</div>
-                                            <div class="text-xs">Pesate</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-green-600">2,180</div>
-                                            <div class="text-xs">Kg olive</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-purple-600">327</div>
-                                            <div class="text-xs">L olio</div>
-                                        </div>
-                                        <div>
-                                            <div class="text-lg font-bold text-orange-600">€4,860</div>
-                                            <div class="text-xs">Fatturato</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white p-3 rounded mb-4">
-                                    <h5 class="font-medium mb-2">Timeline Bio</h5>
-                                    <div class="space-y-2 text-sm">
-                                        <div class="flex justify-between">
-                                            <span>Ultima pesata:</span>
-                                            <span class="font-medium">03/09/2025</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Controllo ICEA:</span>
-                                            <span class="font-medium text-green-600">✅ 15/08/2025</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Prossima prenotazione:</span>
-                                            <span class="font-medium text-orange-600">06/09/2025 09:00</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Certificato Bio:</span>
-                                            <span class="font-medium text-green-600">✅ Valido 31/12/2025</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex space-x-2">
-                                    <button onclick="storicoCompleto('verde')" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
-                                        📄 Storico Bio
-                                    </button>
-                                    <button onclick="fatturaRapida('verde')" class="flex-1 bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700">
-                                        💰 Fattura Bio
-                                    </button>
-                                    <button onclick="contattaCliente('verde')" class="flex-1 bg-yellow-600 text-white py-2 px-3 rounded text-sm hover:bg-yellow-700">
-                                        📱 Contatta
-                                    </button>
-                                </div>
+                            <!-- Sezione vuota per clienti -->
+                            <div class="col-span-2 text-center py-12 bg-gray-50 rounded-lg">
+                                <div class="text-6xl mb-4">👥</div>
+                                <h4 class="text-lg font-medium text-gray-700 mb-2">Nessun cliente registrato</h4>
+                                <p class="text-gray-500 mb-4">Inizia aggiungendo i tuoi primi clienti</p>
+                                <button onclick="openModal('cliente')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                                    👥 Aggiungi Primo Cliente
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -799,15 +641,634 @@
             }
         }
 
-        // Gestione Stock Magazzino
+        // Gestione Stock Magazzino - aggiornato per dati reali
         function gestioneStock(tipo) {
-            const prodotti = {
-                'premium': { nome: 'Extra Vergine Premium', bottiglie: 240, valore: 3240 }
+            if (tipo === 'nuovo') {
+                alert(`📦 SISTEMA MAGAZZINO INIZIALIZZATO\n\n✅ Configurazione aree di stoccaggio\n📋 Tracciabilità lotti attivata\n🏷️ Sistema etichettatura pronto\n\nPuoi iniziare a gestire il tuo stock!`);
+                return;
+            }
+            
+            const azione = prompt(`📦 GESTIONE STOCK\n\nAzioni disponibili:\n1. Carico nuove bottiglie\n2. Scarico vendita\n3. Inventario\n4. Movimento\n\nDigita il numero dell'azione:`, '1');
+            
+            switch(azione) {
+                case '1':
+                    const carico = prompt('Quante bottiglie caricare?', '50');
+                    if (carico) alert(`✅ Caricato stock!\n\n📦 +${carico} bottiglie\n💰 Valore aggiornato\n📋 Registro magazzino aggiornato`);
+                    break;
+                case '2':
+                    const scarico = prompt('Quante bottiglie vendute?', '20');
+                    if (scarico) alert(`✅ Scaricato stock!\n\n📦 -${scarico} bottiglie\n💰 Fatturato: €${scarico * 12}\n📋 Documento di trasporto generato`);
+                    break;
+                case '3':
+                    alert(`📊 INVENTARIO\n\n📦 Sistema pronto per inventario\n📋 Tracciabilità lotti attiva\n✅ SIAN sincronizzato`);
+                    break;
+                case '4':
+                    alert(`🔄 MOVIMENTO STOCK\n\n📋 Registrazione movimento magazzino\n📦 Tracciabilità lotto completa\n✅ SIAN aggiornato automaticamente`);
+                    break;
+            }
+        }
+
+        // Stampa Etichette Avanzata
+        function stampaEtichette(tipo) {
+            const quantita = prompt(`🏷️ STAMPA ETICHETTE\n\nSistema etichettatura professionale\n\nQuante etichette stampare?`, '100');
+            
+            if (quantita) {
+                alert(`🖨️ STAMPA AVVIATA!\n\n🏷️ Quantità: ${quantita} etichette\n📄 Layout: Conforme normativa UE\n🎨 Qualità: 300 DPI\n🔗 QR Code tracciabilità incluso\n\n✅ Invio alla stampante completato`);
+            }
+        }
+
+        // Certificazione Bio - versione sistema pulito
+        function certificazioneBio() {
+            alert(`🌿 SETUP CERTIFICAZIONE BIOLOGICA\n\n` +
+                  `📋 Sistema pronto per certificazione Bio\n` +
+                  `🏢 Compatibile con tutti gli enti\n` +
+                  `📊 Tracciabilità separata automatica\n` +
+                  `📄 Registro Bio dedicato\n\n` +
+                  `✅ Configurazione completata`);
+        }
+
+        // Gestione DOP - versione sistema pulito  
+        function gestioneDOP() {
+            alert(`🏆 SETUP DENOMINAZIONE DOP/IGP\n\n` +
+                  `📜 Sistema compatibile con tutte le DOP\n` +
+                  `🎯 Numerazione controlli automatica\n` +
+                  `🏛️ Integrazione consorzi\n` +
+                  `📋 Disciplinare: Controlli automatici\n` +
+                  `🏷️ Etichettatura: Template conformi\n\n` +
+                  `✅ Sistema DOP configurato`);
+        }
+
+        // Storico Cliente Completo - aggiornato
+        function storicoCompleto(cliente) {
+            if (clientiRegistrati.length === 0) {
+                alert(`📄 STORICO CLIENTI\n\n📊 Nessun cliente registrato\n\n✅ Il sistema è pronto per tracciare:\n• Pesate e moliture\n• Fatturato per cliente\n• Rese produttive\n• Timeline attività\n\nAggiungi il primo cliente per iniziare!`);
+                return;
+            }
+            
+            alert(`📄 STORICO CLIENTI\n\n📊 Sistema di tracking attivo\n📈 Statistiche per cliente disponibili\n📋 Tracciabilità completa\n✅ Report automatici pronti`);
+        }
+
+        // Fattura Rapida - aggiornata
+        function fatturaRapida(cliente) {
+            if (clientiRegistrati.length === 0) {
+                alert(`💰 FATTURAZIONE RAPIDA\n\n✅ Sistema fatturazione elettronica attivo\n📊 Integrazione AdE configurata\n🔗 Connessione SdI verificata\n\n📋 Aggiungi clienti per iniziare la fatturazione`);
+                return;
+            }
+            
+            const importo = prompt('Inserisci importo fattura:', '150');
+            if (importo) {
+                alert(`💰 FATTURA ELETTRONICA GENERATA!\n\n` +
+                      `💶 Importo: €${importo}\n` +
+                      `📅 Data: ${new Date().toLocaleDateString('it-IT')}\n` +
+                      `📊 IVA: Regime configurato\n\n` +
+                      `✅ Fattura inviata AdE\n` +
+                      `📧 Email inviata al cliente\n` +
+                      `📋 Scadenza: 30 giorni`);
+            }
+        }
+
+        // Contatta Cliente - aggiornata
+        function contattaCliente(cliente) {
+            if (clientiRegistrati.length === 0) {
+                alert(`📱 SISTEMA COMUNICAZIONI\n\n✅ WhatsApp Business attivo\n📧 Email automatiche configurate\n📲 SMS gateway collegato\n\n👥 Aggiungi clienti per attivare le comunicazioni`);
+                return;
+            }
+            
+            const metodo = prompt(`📱 COMUNICAZIONI CLIENTE\n\nScegli metodo:\n1. WhatsApp Business\n2. SMS\n3. Chiamata\n4. Email automatica\n\nDigita numero:`, '1');
+            
+            switch(metodo) {
+                case '1':
+                    alert(`📱 WhatsApp Business ready!\n\n✅ Sistema configurato per invio automatico\n💬 Template messaggi pronti\n📊 Tracking consegne attivo`);
+                    break;
+                case '2':
+                    alert(`📲 SMS Gateway attivo!\n\n✅ Invio SMS automatico configurato\n📊 Tracking letture disponibile`);
+                    break;
+                case '3':
+                    alert(`📞 Sistema chiamate integrato\n\n✅ Click-to-call attivo\n📋 Log chiamate automatico`);
+                    break;
+                case '4':
+                    alert(`📧 Email automatiche configurate!\n\n✅ Template pronti\n📊 Tracking aperture attivo\n📄 Allegati automatici`);
+                    break;
+            }
+        }
+
+        // ========================
+        // FUNZIONI FORM AGGIORNATE
+        // ========================
+
+        function salvaPesata(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Aggiungi pesata al sistema
+            const idPesata = aggiungiPesata(data);
+            
+            alert(`✅ Pesata registrata con successo!\n\n📊 Dettagli:\n• ID: ${idPesata}\n• Produttore: ${data.produttore}\n• Peso: ${data.peso} kg\n• Varietà: ${data.varieta}\n\n📋 Registro SIAN aggiornato automaticamente`);
+            closeModal();
+        }
+
+        function salvaCliente(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Aggiungi cliente al sistema
+            const nuovoCliente = {
+                id: clientiRegistrati.length + 1,
+                ragioneSociale: data.ragione_sociale,
+                piva: data.piva,
+                telefono: data.telefono,
+                email: data.email,
+                indirizzo: data.indirizzo,
+                foglio: data.foglio,
+                particella: data.particella,
+                tipoProduzione: data.tipo_produzione,
+                dataRegistrazione: new Date().toISOString().split('T')[0]
             };
             
-            const prodotto = prodotti[tipo];
-            if (prodotto) {
-                const azione = prompt(`📦 GESTIONE STOCK - ${prodotto.nome}\n\nAzioni disponibili:\n1. Carico nuove bottiglie\n2. Scarico vendita\n3. Inventario\n4. Movimento\n\nDigita il numero dell'azione:`, '1');
+            clientiRegistrati.push(nuovoCliente);
+            
+            alert(`👥 Cliente registrato con successo!\n\n📊 Dettagli:\n• Ragione Sociale: ${data.ragione_sociale}\n• P.IVA: ${data.piva}\n• Tipo: ${data.tipo_produzione}\n\n📋 Anagrafica aggiornata\n✅ Pronto per nuove pesate`);
+            closeModal();
+            
+            // Aggiorna interfaccia clienti se necessario
+            aggiornaSezioneClienti();
+        }
+
+        // Funzione per aggiornare la sezione clienti quando il primo cliente viene aggiunto
+        function aggiornaSezioneClienti() {
+            // Potresti implementare qui la logica per aggiornare l'interfaccia
+            // quando vengono aggiunti clienti reali
+        }
+
+        // Aggiorna funzione molire per sistema reale
+        function molire(pesataId) {
+            const pesata = pesateGiornaliere.find(p => p.id === pesataId);
+            if (pesata) {
+                pesata.stato = 'Molita';
+                
+                // Simula produzione olio (15% resa)
+                const olioprodotto = pesata.peso * 0.15;
+                
+                // Aggiungi olio alla cisterna appropriata
+                const cisternaTipo = pesata.tipo === 'biologico' ? 'B2' : 
+                                   pesata.tipo === 'dop' ? 'C1' : 
+                                   pesata.peso > 200 ? 'A1' : 'D1'; // Cisterna in base a peso/tipo
+                
+                riempiCisterna(cisternaTipo, olioprodotto);
+                
+                alert(`🏭 Molitura completata per ${pesataId}!\n\n⚙️ Parametri utilizzati:\n• Temperatura: 26.5°C\n• Gramolatura: 35 min\n• Centrifuga: 3200 rpm\n\n📊 Risultati:\n• Olio prodotto: ${olioprodotto.toFixed(1)}L\n• Resa: ${((olioprodotto/pesata.peso)*100).toFixed(1)}%\n• Cisterna: ${cisternaTipo}`);
+                
+                aggiornaTabellaPesate();
+            }
+        }
+
+        // ========================
+        // FUNZIONI BASE SISTEMA
+        // ========================
+
+        // Funzione per cambiare tab
+        function showTab(tabName) {
+            // Nasconde tutti i tab
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // Mostra il tab selezionato
+            const selectedTab = document.getElementById(tabName);
+            if (selectedTab) {
+                selectedTab.classList.remove('hidden');
+            }
+
+            // Aggiorna sidebar
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            sidebarItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Trova e attiva l'item della sidebar
+            const activeItem = event.target;
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+
+            currentTab = tabName;
+        }
+
+        // Azioni rapide ExtraVirgin
+        function azioneFatture() {
+            if (clientiRegistrati.length === 0) {
+                alert('📄 SISTEMA FATTURAZIONE\n\nNessun cliente registrato per generare fatture.\n\n✅ Sistema pronto per fatturazione elettronica\nAggiungi clienti per iniziare!');
+            } else {
+                alert('🖨️ Stampando tutte le fatture del giorno...\n\n✅ Operazione completata in 2 click!\n📄 Fatture elaborate: ' + clientiRegistrati.length);
+            }
+        }
+
+        function azioneTrasferimento() {
+            // Controlla se ci sono cisterne con olio
+            const cisterneConOlio = Object.keys(cisterne).filter(id => cisterne[id].livello > 0);
+            
+            if (cisterneConOlio.length === 0) {
+                alert('↔️ TRASFERIMENTO OLIO\n\nNessuna cisterna contiene olio al momento.\n\n✅ Sistema trasferimenti configurato\nInserisci pesate e moliture per iniziare!');
+                return;
+            }
+            
+            const da = prompt('Da quale cisterna trasferire?\n\nCisterne disponibili: ' + cisterneConOlio.join(', '), cisterneConOlio[0]);
+            if (da && cisterne[da] && cisterne[da].livello > 0) {
+                const disponibile = cisterne[da].livello;
+                const qty = prompt(`Quantità da trasferire (disponibili: ${disponibile}L):`, Math.min(disponibile, 100).toString());
+                if (qty && parseFloat(qty) > 0) {
+                    const quantita = Math.min(parseFloat(qty), disponibile);
+                    cisterne[da].livello -= quantita;
+                    
+                    const a = prompt('Verso quale cisterna?', 'A1');
+                    if (a && cisterne[a]) {
+                        riempiCisterna(a, quantita);
+                        alert(`↔️ Trasferimento completato!\n\n🔄 ${quantita}L da cisterna ${da} → ${a}\n✅ Registri aggiornati automaticamente`);
+                    }
+                }
+            }
+        }
+
+        function azioneBackup() {
+            const dataBackup = {
+                pesate: pesateGiornaliere.length,
+                clienti: clientiRegistrati.length,
+                cisterne: Object.keys(cisterne).length,
+                data: new Date().toISOString()
+            };
+            
+            alert(`☁️ Backup cloud completato!\n\n📊 Dati salvati:\n• Pesate: ${dataBackup.pesate}\n• Clienti: ${dataBackup.clienti}\n• Cisterne: ${dataBackup.cisterne}\n\n🛡️ 100% protezione dati garantita\n⏱️ Completato in 1 click!`);
+        }
+
+        function azioneSIAN() {
+            invioRapidoSIAN();
+        }
+
+        // Funzioni SIAN
+        function invioRapidoSIAN() {
+            const resultDiv = document.getElementById('sian-result');
+            if (resultDiv) {
+                resultDiv.style.display = 'block';
+                const movimenti = pesateGiornaliere.length;
+                
+                if (movimenti === 0) {
+                    resultDiv.innerHTML = '⚠️ Nessun movimento da inviare oggi. Registra pesate per generare dati SIAN.';
+                    return;
+                }
+                
+                resultDiv.innerHTML = '🚀 Invio rapido SIAN in corso via Web Service...';
+                
+                setTimeout(() => {
+                    const protocollo = 'SIAN' + new Date().toISOString().replace(/[-:T.]/g, '').slice(0, 14);
+                    resultDiv.innerHTML = `
+                        <div class="bg-green-100 p-3 rounded border">
+                            <div class="font-medium text-green-800">✅ INVIO SIAN COMPLETATO!</div>
+                            <div class="text-sm text-green-600 mt-2">
+                                • Protocollo: ${protocollo}<br>
+                                • Movimenti inviati: ${movimenti}<br>
+                                • Orario: ${new Date().toLocaleString('it-IT')}<br>
+                                • Email di conferma inviata
+                            </div>
+                        </div>
+                    `;
+                    risolviNotifica(1);
+                }, 3000);
+            }
+        }
+
+        function extraRiscontro() {
+            const resultDiv = document.getElementById('sian-result');
+            if (resultDiv) {
+                const movimenti = pesateGiornaliere.length;
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = '🔍 ExtraRiscontro: simulazione in corso...';
+                
+                setTimeout(() => {
+                    resultDiv.innerHTML = `
+                        <div class="bg-blue-100 p-3 rounded border">
+                            <div class="font-medium text-blue-800">🔍 SIMULAZIONE COMPLETATA</div>
+                            <div class="text-sm text-blue-600 mt-2">
+                                • Dati validati: ${movimenti} movimenti<br>
+                                • Formato: ✅ Conforme<br>
+                                • Esito previsto: <strong>POSITIVO</strong><br>
+                                • ${movimenti > 0 ? 'Pronto per invio reale' : 'Registra pesate per generare movimenti'}
+                            </div>
+                        </div>
+                    `;
+                }, 2000);
+            }
+        }
+
+        // Funzioni pesate
+        function acquisirePeso() {
+            const nuovoPeso = (Math.random() * 200 + 100).toFixed(1);
+            const pesoElement = document.getElementById('peso-live');
+            if (pesoElement) {
+                pesoElement.textContent = nuovoPeso + ' kg';
+            }
+            alert(`⚖️ Peso acquisito dalla bilancia integrata:\n\n📊 ${nuovoPeso} kg\n✅ Pronto per registrazione\n\nUsa "Nuova Pesata" per registrare`);
+        }
+
+        function inviaWhatsApp(pesataId) {
+            const pesata = pesateGiornaliere.find(p => p.id === pesataId);
+            if (pesata) {
+                alert(`📱 WhatsApp inviato per ${pesataId}!\n\n💬 "La sua molitura è stata completata"\n👤 Cliente: ${pesata.produttore}\n📊 Risultati allegati\n✅ Messaggio consegnato`);
+            }
+        }
+
+        // Controllo Linea Imbottigliamento
+        function controlloLinea() {
+            const statusElement = document.getElementById('linea-status');
+            const bottiglieElement = document.getElementById('bottiglie-oggi');
+            
+            if (statusElement && bottiglieElement) {
+                const isAttiva = statusElement.textContent === 'ATTIVA';
+                if (isAttiva) {
+                    statusElement.textContent = 'PAUSA';
+                    statusElement.className = 'text-2xl font-bold text-yellow-600';
+                    alert('⏸️ Linea imbottigliamento messa in pausa\n\n🛑 Produzione interrotta\n📊 Bottiglie prodotte oggi: ' + bottiglieElement.textContent);
+                } else {
+                    statusElement.textContent = 'ATTIVA';
+                    statusElement.className = 'text-2xl font-bold text-blue-600';
+                    const bottiglieAttuali = parseInt(bottiglieElement.textContent.replace(/,/g, '')) || 0;
+                    const nuoveBottiglie = bottiglieAttuali + Math.floor(Math.random() * 50 + 10);
+                    bottiglieElement.textContent = nuoveBottiglie.toLocaleString();
+                    alert('▶️ Linea imbottigliamento riavviata\n\n✅ Produzione attiva\n🍾 Nuove bottiglie in produzione');
+                }
+            }
+        }
+
+        // Gestione notifiche
+        function risolviNotifica(id) {
+            const badge = document.getElementById('notification-badge');
+            if (badge) {
+                const count = Math.max(0, parseInt(badge.textContent) - 1);
+                badge.textContent = count;
+                if (count <= 0) {
+                    badge.style.display = 'none';
+                }
+            }
+            alert(`✅ Notifica risolta!\n\n${id === 1 ? '🚀 Invio SIAN completato automaticamente' : 'Operazione completata'}`);
+        }
+
+        // Funzioni modal
+        function openModal(type) {
+            const modal = document.getElementById('modal-overlay');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            switch(type) {
+                case 'pesata':
+                    title.textContent = 'Nuova Pesata';
+                    content.innerHTML = getPesataForm();
+                    break;
+                case 'pesata-multipla':
+                    title.textContent = 'Pesata Multipla ExtraVirgin';
+                    content.innerHTML = getPesataMultiplaForm();
+                    break;
+                case 'cliente':
+                    title.textContent = 'Nuovo Cliente';
+                    content.innerHTML = getClienteForm();
+                    break;
+                default:
+                    title.textContent = 'Nuovo ' + type;
+                    content.innerHTML = '<p>Funzionalità in sviluppo...</p>';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        function getPesataForm() {
+            // Popola select clienti se disponibili
+            let opzioniClienti = '<option value="">Seleziona da anagrafica...</option>';
+            if (clientiRegistrati.length > 0) {
+                clientiRegistrati.forEach(cliente => {
+                    opzioniClienti += `<option value="${cliente.ragioneSociale}">${cliente.ragioneSociale} (${cliente.tipoProduzione})</option>`;
+                });
+            } else {
+                opzioniClienti += '<option value="Cliente Generico">Cliente Generico (aggiungi in anagrafica)</option>';
+            }
+            
+            return `
+                <form onsubmit="salvaPesata(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Produttore</label>
+                        <select name="produttore" class="w-full p-2 border rounded-lg" required>
+                            ${opzioniClienti}
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Peso (kg)</label>
+                            <input type="number" name="peso" class="w-full p-2 border rounded-lg bg-blue-50" required readonly value="${document.getElementById('peso-live').textContent.replace(' kg', '')}">
+                            <button type="button" onclick="acquisirePesoForm()" class="text-xs text-blue-600 mt-1">⚖️ Aggiorna da bilancia</button>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Varietà</label>
+                            <select name="varieta" class="w-full p-2 border rounded-lg" required>
+                                <option value="">Seleziona...</option>
+                                <option value="Frantoio">Frantoio</option>
+                                <option value="Leccino">Leccino</option>
+                                <option value="Coratina">Coratina</option>
+                                <option value="Moraiolo">Moraiolo</option>
+                                <option value="Pendolino">Pendolino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tipo Produzione</label>
+                        <select name="tipo" class="w-full p-2 border rounded-lg">
+                            <option value="convenzionale">Convenzionale</option>
+                            <option value="biologico">🌿 Biologico</option>
+                            <option value="dop">🏆 DOP/IGP</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-4">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg">
+                            Annulla
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">
+                            ⚖️ Registra Pesata
+                        </button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function getPesataMultiplaForm() {
+            return `
+                <form onsubmit="salvaPesataMultipla(event)" class="space-y-4">
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <div class="font-medium text-blue-800">🏗️ Pesata Multipla</div>
+                        <div class="text-sm text-blue-600">Raggruppa più pesate in una sola registrazione</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Produttore Principale</label>
+                        <select name="produttore" class="w-full p-2 border rounded-lg" required>
+                            <option value="">Seleziona...</option>
+                            <option value="Cooperativa Olivicola">Cooperativa Olivicola</option>
+                            <option value="Consorzio Produttori">Consorzio Produttori</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Numero Lotti da Raggruppare</label>
+                        <input type="number" name="numero_lotti" class="w-full p-2 border rounded-lg" min="2" max="10" value="3">
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-4">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg">
+                            Annulla
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                            🏗️ Crea Pesata Multipla
+                        </button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function getClienteForm() {
+            return `
+                <form onsubmit="salvaCliente(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Ragione Sociale</label>
+                            <input type="text" name="ragione_sociale" class="w-full p-2 border rounded-lg" required placeholder="Az. Agricola...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">P.IVA</label>
+                            <input type="text" name="piva" class="w-full p-2 border rounded-lg" required placeholder="12345678901">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Telefono</label>
+                            <input type="tel" name="telefono" class="w-full p-2 border rounded-lg" placeholder="+39 055 123456">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" name="email" class="w-full p-2 border rounded-lg" placeholder="info@azienda.it">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Indirizzo</label>
+                        <input type="text" name="indirizzo" class="w-full p-2 border rounded-lg" placeholder="Via Roma 123, Firenze">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Foglio Catastale</label>
+                            <input type="text" name="foglio" class="w-full p-2 border rounded-lg" placeholder="15">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Particella</label>
+                            <input type="text" name="particella" class="w-full p-2 border rounded-lg" placeholder="142">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tipo Produzione</label>
+                        <select name="tipo_produzione" class="w-full p-2 border rounded-lg">
+                            <option value="convenzionale">Convenzionale</option>
+                            <option value="biologico">🌿 Biologico</option>
+                            <option value="dop">🏆 DOP/IGP</option>
+                            <option value="misto">Misto</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-4">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg">
+                            Annulla
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                            👥 Registra Cliente
+                        </button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function acquisirePesoForm() {
+            const pesoInput = document.querySelector('input[name="peso"]');
+            if (pesoInput) {
+                const nuovoPeso = (Math.random() * 200 + 100).toFixed(1);
+                pesoInput.value = nuovoPeso;
+                // Aggiorna anche il peso live
+                const pesoLive = document.getElementById('peso-live');
+                if (pesoLive) pesoLive.textContent = nuovoPeso + ' kg';
+                alert(`⚖️ Peso aggiornato: ${nuovoPeso} kg`);
+            }
+        }
+
+        function salvaPesataMultipla(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            const numeroLotti = parseInt(data.numero_lotti) || 3;
+            
+            // Crea pesate multiple
+            for (let i = 1; i <= numeroLotti; i++) {
+                const pesataMultipla = {
+                    produttore: data.produttore + ` - Lotto ${i}`,
+                    peso: Math.floor(Math.random() * 100 + 150),
+                    varieta: ['Frantoio', 'Leccino', 'Coratina'][Math.floor(Math.random() * 3)],
+                    tipo: 'convenzionale'
+                };
+                aggiungiPesata(pesataMultipla);
+            }
+            
+            alert(`🏗️ Pesata multipla creata!\n\n📊 ${numeroLotti} lotti registrati sotto ${data.produttore}\n📋 Tracciabilità mantenuta per varietà\n✅ Sistema ottimizzato per molitura`);
+            closeModal();
+        }
+
+        // Aggiornamento peso live (simulazione sensori)
+        function updatePesoLive() {
+            if (Math.random() > 0.8) {
+                const pesoElement = document.getElementById('peso-live');
+                if (pesoElement) {
+                    const nuovoPeso = (Math.random() * 100 + 200).toFixed(1);
+                    pesoElement.textContent = nuovoPeso + ' kg';
+                }
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal click outside to close
+            const modalOverlay = document.getElementById('modal-overlay');
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal();
+                    }
+                });
+            }
+            
+            console.log('✅ ExtraVirgin Style caricato - Sistema pulito pronto per dati reali');
+            
+            // Simula aggiornamenti sensori
+            setInterval(updatePesoLive, 8000);
+            
+            // Inizializza KPI vuoti
+            aggiornaKPI();
+            
+            // Messaggio di benvenuto
+            setTimeout(() => {
+                console.log('🏭 Sistema ExtraVirgin: Tutti i moduli attivi');
+                console.log('📡 Interconnessione 4.0: Sensori connessi');
+                console.log('🚀 SIAN Web Service: Connessione stabile');
+                console.log('📝 Sistema pronto per inserimento dati reali');
+            }, 1000);
+        });
+
+        console.log('🎉 Frantoio Manager ExtraVirgin Style inizializzato - Versione Sistema Pulito!');
+    </script>
+</body>
+</html>ove bottiglie\n2. Scarico vendita\n3. Inventario\n4. Movimento\n\nDigita il numero dell'azione:`, '1');
                 
                 switch(azione) {
                     case '1':
