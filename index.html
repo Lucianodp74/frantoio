@@ -1380,12 +1380,19 @@
             // Simula aggiornamenti sensori
             setInterval(updatePesoLive, 8000);
             
-            // Inizializza KPI vuoti - Controllo che gli elementi esistano
+            // Inizializza tutto a zero/vuoto - Controllo che gli elementi esistano
             setTimeout(() => {
-                if (document.getElementById('kpi-pesate')) {
+                try {
+                    if (document.getElementById('kpi-pesate')) {
+                        // Reset completo all'avvio
+                        resetInterfaccia();
+                    }
+                } catch (error) {
+                    console.log('Errore inizializzazione:', error);
+                    // Inizializzazione minimale se c'è errore
                     aggiornaKPI();
                 }
-            }, 100);
+            }, 500);
             
             // Messaggio di benvenuto
             setTimeout(() => {
