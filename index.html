@@ -1123,33 +1123,51 @@
 
         // Funzioni modal
         function openModal(type) {
+            console.log('Apertura modal:', type);
+            
             const modal = document.getElementById('modal-overlay');
             const title = document.getElementById('modal-title');
             const content = document.getElementById('modal-content');
             
-            switch(type) {
-                case 'pesata':
-                    title.textContent = 'Nuova Pesata';
-                    content.innerHTML = getPesataForm();
-                    break;
-                case 'pesata-multipla':
-                    title.textContent = 'Pesata Multipla ExtraVirgin';
-                    content.innerHTML = getPesataMultiplaForm();
-                    break;
-                case 'cliente':
-                    title.textContent = 'Nuovo Cliente';
-                    content.innerHTML = getClienteForm();
-                    break;
-                default:
-                    title.textContent = 'Nuovo ' + type;
-                    content.innerHTML = '<p>Funzionalità in sviluppo...</p>';
+            if (!modal || !title || !content) {
+                console.error('Elementi modal non trovati');
+                return;
             }
             
-            modal.classList.add('active');
+            try {
+                switch(type) {
+                    case 'pesata':
+                        title.textContent = 'Nuova Pesata';
+                        content.innerHTML = getPesataForm();
+                        break;
+                    case 'pesata-multipla':
+                        title.textContent = 'Pesata Multipla ExtraVirgin';
+                        content.innerHTML = getPesataMultiplaForm();
+                        break;
+                    case 'cliente':
+                        title.textContent = 'Nuovo Cliente';
+                        content.innerHTML = getClienteForm();
+                        break;
+                    default:
+                        title.textContent = 'Nuovo ' + type;
+                        content.innerHTML = '<p>Funzionalità in sviluppo...</p>';
+                }
+                
+                modal.classList.add('active');
+                console.log('Modal aperto con successo');
+                
+            } catch (error) {
+                console.error('Errore apertura modal:', error);
+                alert('Errore apertura form. Ricaricare la pagina.');
+            }
         }
 
         function closeModal() {
-            document.getElementById('modal-overlay').classList.remove('active');
+            const modal = document.getElementById('modal-overlay');
+            if (modal) {
+                modal.classList.remove('active');
+                console.log('Modal chiuso');
+            }
         }
 
         function getPesataForm() {
